@@ -8,6 +8,7 @@
  * 2010-10-24: Formatting and cleanup - Camilla Löwy
  *****************************************************************************/
 
+#include "Threads.h"
 #if defined(_MSC_VER)
 // Make MS math.h define M_PI
 #define _USE_MATH_DEFINES
@@ -75,29 +76,39 @@ void init_vertices(void) {
       p = y * GRIDW + x;
 
       vertex[p].x = (GLfloat)(x - GRIDW / 2) / (GLfloat)(GRIDW / 2);
+      YieldToAnyThread();
       vertex[p].y = (GLfloat)(y - GRIDH / 2) / (GLfloat)(GRIDH / 2);
+      YieldToAnyThread();
       vertex[p].z = 0;
 
       if ((x % 4 < 2) ^ (y % 4 < 2))
         vertex[p].r = 0.0;
       else
         vertex[p].r = 1.0;
+      YieldToAnyThread();
 
       vertex[p].g = (GLfloat)y / (GLfloat)GRIDH;
+      YieldToAnyThread();
       vertex[p].b =
           1.f -
           ((GLfloat)x / (GLfloat)GRIDW + (GLfloat)y / (GLfloat)GRIDH) / 2.f;
+      YieldToAnyThread();
     }
   }
 
   for (y = 0; y < QUADH; y++) {
     for (x = 0; x < QUADW; x++) {
       p = 4 * (y * QUADW + x);
+      YieldToAnyThread();
 
-      quad[p + 0] = y * GRIDW + x;           // Some point
-      quad[p + 1] = y * GRIDW + x + 1;       // Neighbor at the right side
+      quad[p + 0] = y * GRIDW + x; // Some point
+      YieldToAnyThread();
+      quad[p + 1] = y * GRIDW + x + 1; // Neighbor at the right side
+      YieldToAnyThread();
       quad[p + 2] = (y + 1) * GRIDW + x + 1; // Upper right neighbor
-      quad[p + 3] = (y + 1) * GRIDW + x;     // Upper neighbor
+      YieldToAnyThread();
+      quad[p + 3] = (y + 1) * GRIDW + x; // Upper neighbor
+      YieldToAnyThread();
     }
   }
 }
@@ -118,16 +129,24 @@ void init_grid(void) {
   for (y = 0; y < GRIDH; y++) {
     for (x = 0; x < GRIDW; x++) {
       dx = (double)(x - GRIDW / 2);
+      YieldToAnyThread();
       dy = (double)(y - GRIDH / 2);
+      YieldToAnyThread();
       d = sqrt(dx * dx + dy * dy);
+      YieldToAnyThread();
       if (d < 0.1 * (double)(GRIDW / 2)) {
         d = d * 10.0;
+        YieldToAnyThread();
         p[x][y] = -cos(d * (M_PI / (double)(GRIDW * 4))) * 100.0;
+        YieldToAnyThread();
       } else
         p[x][y] = 0.0;
+      YieldToAnyThread();
 
       vx[x][y] = 0.0;
+      YieldToAnyThread();
       vy[x][y] = 0.0;
+      YieldToAnyThread();
     }
   }
 }

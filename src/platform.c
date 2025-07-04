@@ -8,22 +8,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-uint64_t gTimer;
-TMTask gTM;
-
 UnsignedWide gLastMicroseconds;
 TimerUPP gTimerUPP;
 ProcessSerialNumber gPSN;
 
-static void globalTimer(void) {
-  gTimer += 1;
-  PrimeTime((QElemPtr)&gTM, 1);
-};
-
 int glfwInit(void) {
   GetCurrentProcess(&gPSN);
 
-  gTM.tmAddr = NewTimerProc(globalTimer);
+  gTM.tmAddr = NewTimerProc(timerUpdateFunc);
   gTM.tmWakeUp = 0;
   gTM.tmReserved = 0;
 
@@ -60,9 +52,3 @@ GLFWerrorfun glfwSetErrorCallback(GLFWerrorfun callback) {
   errCallback = callback;
   return prevCallback;
 };
-
-double glfwGetTime(void) {
-  // printf("%ld\n", gTimer);
-  return (double)gTimer;
-};
-void glfwSetTime(double time) { gTimer = (uint64_t)time; };

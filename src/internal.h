@@ -3,6 +3,7 @@
 
 #include "MacTypes.h"
 #include "Quickdraw.h"
+#include "Timer.h"
 #include "agl.h"
 
 struct GLFWwindow {
@@ -34,6 +35,10 @@ struct GLFWwindow {
 
 extern uint64_t gTimer;
 extern int aglErr;
+
+extern TMTask gTM;
+extern uint64_t gTimer;
+void timerUpdateFunc(void);
 
 // Execute an AGL function and then exit, printing the message, if it fails.
 #define AGL_ERROR(x)                                                           \

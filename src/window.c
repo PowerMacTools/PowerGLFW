@@ -329,8 +329,3 @@ void glfwRequestWindowAttention(GLFWwindow *window) {
   // We don't print an unimpl message because this function, as far as I'm
   // concerned, is allowed to do nothing "on platforms that don't support it"
 };
-
-void glfwMacWindowBegin(GLFWwindow *window) { YieldToAnyThread(); };
-void glfwMacWindowEnd(GLFWwindow *window) {
-
-};
