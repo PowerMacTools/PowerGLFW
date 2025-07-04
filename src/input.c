@@ -7,22 +7,14 @@
 #include <stddef.h>
 #include <stdio.h>
 
-void glfwPollEvents(void) {
-  WindowPtr window = ___curWindow->window;
-  EventRecord event;
+const int inputEventMask =
+    mDownMask & mUpMask & keyDownMask & keyUpMask & keyUpMask;
 
-  while (!GetNextEvent(everyEvent, &event)) {
-    YieldToAnyThread();
-  }
-
-  SystemTask();
+void eventFunc(WindowPtr window, EventRecord event) {
   switch (event.what) {
-  case updateEvt:
-    aglUpdateContext(___curWindow->context);
-    break;
-  case activateEvt:
-    GetWRefCon(window);
-    break;
+  // case updateEvt:
+  // aglUpdateContext(___curWindow->context);
+  // break;
   case osEvt:
     break;
   case mouseDown: {
@@ -42,11 +34,37 @@ void glfwPollEvents(void) {
     }
   }
   }
-  FlushEvents(everyEvent, -1);
+  FlushEvents(inputEventMask, -1);
   YieldToAnyThread();
+}
+
+void glfwPollEvents(void) {
+  WindowPtr window = ___curWindow->window;
+  EventRecord event;
+
+  SystemTask();
+
+  RgnHandle rgn = NewRgn();
+  while (!WaitNextEvent(inputEventMask, &event, 0, rgn)) {
+    YieldToAnyThread();
+  }
+
+  eventFunc(window, event);
 };
-void glfwWaitEvents(void) { /* ... */ };
-void glfwWaitEventsTimeout(double timeout) { /* ... */ };
+
+void glfwWaitEvents(void) { glfwWaitEventsTimeout(0); };
+void glfwWaitEventsTimeout(double timeout) {
+  WindowPtr window = ___curWindow->window;
+  EventRecord event;
+
+  SystemTask();
+
+  while (!WaitNextEvent(inputEventMask, &event, timeout, window->visRgn)) {
+    YieldToAnyThread();
+  }
+
+  eventFunc(window, event);
+};
 void glfwPostEmptyEvent(void) { /* ... */ };
 int glfwGetInputMode(GLFWwindow *window, int mode) { return 0; };
 void glfwSetInputMode(GLFWwindow *window, int mode, int value) {};

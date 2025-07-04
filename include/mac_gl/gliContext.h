@@ -1,9 +1,9 @@
 /*
-        File:		gliContext.h
+				File:		gliContext.h
 
-        Version:	1.0
+				Version:	1.0
 
-        Copyright:	� 1999 by Apple Computer, Inc., all rights reserved.
+				Copyright:	� 1999 by Apple Computer, Inc., all rights reserved.
 */
 
 #ifndef _GLICONTEXT_H
@@ -16,7 +16,7 @@ extern "C" {
 /*
 ** GL context data type
 */
-typedef struct __GLIContextRec *GLIContext;
+typedef struct __GLIContextRec* GLIContext;
 
 #ifdef __cplusplus
 }

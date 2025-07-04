@@ -25,6 +25,7 @@ foreach(prg IN ITEMS boing gears splitview wave windows)
     add_application(
         ${prg} 
         examples/${prg}.c
+        CONSOLE
     )
 
     set_target_properties(${prg} PROPERTIES COMPILE_FLAGS "-ffunction-sections -mcpu=601 -O3 -Wall -Wextra -Wno-unused-parameter")

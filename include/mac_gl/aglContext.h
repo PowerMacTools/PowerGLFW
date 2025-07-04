@@ -1,9 +1,9 @@
 /*
-        File:		aglContext.h
+				File:		aglContext.h
 
-        Version:	1.0
+				Version:	1.0
 
-        Copyright:	� 1999 by Apple Computer, Inc., all rights reserved.
+				Copyright:	� 1999 by Apple Computer, Inc., all rights reserved.
 */
 
 #ifndef _AGLCONTEXT_H
@@ -19,16 +19,16 @@ extern "C" {
 /*
 ** Opaque declaration for private AGLContext data.
 */
-typedef struct __AGLPrivateRec *AGLPrivate;
+typedef struct __AGLPrivateRec* AGLPrivate;
 
 /*
 ** AGLContext structure.
 */
 struct __AGLContextRec {
-  GLIContext rend;
-  GLIFunctionDispatch disp;
-  GLIExtensionDispatch exts;
-  AGLPrivate priv;
+	GLIContext					 rend;
+	GLIFunctionDispatch	 disp;
+	GLIExtensionDispatch exts;
+	AGLPrivate					 priv;
 };
 
 #ifdef __cplusplus

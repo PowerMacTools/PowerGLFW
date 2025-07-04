@@ -1,0 +1,18 @@
+---
+# $Id: .clang-format 16 2025-01-30 10:59:29Z nishi $
+Language: Cpp
+UseTab: Always
+TabWidth: 2
+AlignConsecutiveAssignments:
+  Enabled: true
+AlignConsecutiveDeclarations:
+  Enabled: true
+AlignConsecutiveMacros:
+  Enabled: true
+IndentWidth: 2
+PointerAlignment: Left
+AllowShortIfStatementsOnASingleLine: Always
+AllowShortBlocksOnASingleLine: Never
+AllowShortLoopsOnASingleLine: true
+SpaceBeforeParens: Never
+AlignEscapedNewlines: DontAlign
