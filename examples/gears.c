@@ -212,7 +212,7 @@ static void draw(void) {
 }
 
 /* update animation parameters */
-static void animate(void) { angle = 100.f * (float)glfwGetTime(); }
+static void animate(void) { angle = 100.f * ((float)glfwGetTime() / 1000); }
 
 /* change view angle, exit upon ESC */
 void key(GLFWwindow *window, int k, int s, int action, int mods) {

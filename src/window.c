@@ -40,7 +40,7 @@ GLFWwindow *glfwCreateWindow(int width, int height, const char *title,
   SetRect(&win->winRect, 100, 100, width, height);
 
   win->window = NewCWindow(nil, &win->winRect, (ConstStr255Param) "\p", true,
-                           documentProc, (WindowPtr)(-1), false, 0);
+                           documentProc, (WindowPtr)(-1), true, 0);
 
   SetPort(win->window);
   setwtitle(win->window, title);
