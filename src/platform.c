@@ -1,4 +1,5 @@
 #include "MacTypes.h"
+#include "Processes.h"
 #include "Timer.h"
 #include "internal.h"
 #include <GLFW/glfw3.h>
@@ -8,34 +9,30 @@
 #include <string.h>
 
 uint64_t gTimer;
+TMTask gTM;
+
 UnsignedWide gLastMicroseconds;
 TimerUPP gTimerUPP;
+ProcessSerialNumber gPSN;
 
-void globalTimer() {
-  UnsignedWide microseconds;
-  Microseconds(&microseconds);
-
-  UnsignedWide newMicroseconds = {
-      .hi = gLastMicroseconds.hi - microseconds.hi,
-      .lo = gLastMicroseconds.lo - microseconds.lo,
-  };
-
-  gTimer += *(uint64_t *)&newMicroseconds;
-
-  Microseconds(&newMicroseconds);
+static void globalTimer(void) {
+  gTimer += 1;
+  PrimeTime((QElemPtr)&gTM, 1);
 };
 
 int glfwInit(void) {
-  TMTask tm = {0};
-  memset(&tm, 0, sizeof(tm));
-  gTimerUPP = NewTimerProc(globalTimer);
-  tm.tmAddr = gTimerUPP;
+  GetCurrentProcess(&gPSN);
 
-  InsTime((QElemPtr)&tm);
-  PrimeTime((QElemPtr)&tm, 1);
+  gTM.tmAddr = NewTimerProc(globalTimer);
+  gTM.tmWakeUp = 0;
+  gTM.tmReserved = 0;
+
+  InsTime((QElemPtr)&gTM);
+  PrimeTime((QElemPtr)&gTM, 1);
 
   return GLFW_TRUE;
 };
+
 void glfwTerminate(void) {};
 void glfwInitHint(int hint, int value) {};
 void glfwInitAllocator(const GLFWallocator *allocator) {};
@@ -63,3 +60,9 @@ GLFWerrorfun glfwSetErrorCallback(GLFWerrorfun callback) {
   errCallback = callback;
   return prevCallback;
 };
+
+double glfwGetTime(void) {
+  // printf("%ld\n", gTimer);
+  return (double)gTimer;
+};
+void glfwSetTime(double time) { gTimer = (uint64_t)time; };

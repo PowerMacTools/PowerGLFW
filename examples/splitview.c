@@ -489,10 +489,6 @@ int main(void) {
   // Main loop
   for (;;) {
 
-#ifdef GLFW_EXTRA_MAC_FUNCTIONS
-    glfwMacWindowBegin(window);
-#endif
-
     // Only redraw if we need to
     if (do_redraw)
       windowRefreshFun(window);

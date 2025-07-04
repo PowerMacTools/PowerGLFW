@@ -10,6 +10,7 @@
 #include "Quickdraw.h"
 #include "TextEdit.h"
 #include "Threads.h"
+#include "agl.h"
 #include "aglMacro.h"
 #include "internal.h"
 #include <Dialogs.h>
@@ -26,8 +27,6 @@ GLFWwindow *glfwCreateWindow(int width, int height, const char *title,
 
   GLFWwindow *win = malloc(sizeof(GLFWwindow *));
 
-  // unsigned char *title = (unsigned char *)"\pHello, world!";
-
   // Setup the Window
   InitGraf(&qd.thePort);
   InitFonts();
@@ -40,13 +39,11 @@ GLFWwindow *glfwCreateWindow(int width, int height, const char *title,
 
   SetRect(&win->winRect, 100, 100, width, height);
 
-  char winTitle[255];
-  uint8_t titleLen = (uint8_t)strnlen(title, 255);
-  snprintf((char *)winTitle, 255, "%d%s", titleLen, title);
-
-  win->window = NewCWindow(nil, &win->winRect, (ConstStr255Param)winTitle, true,
+  win->window = NewCWindow(nil, &win->winRect, (ConstStr255Param) "\p", true,
                            documentProc, (WindowPtr)(-1), false, 0);
+
   SetPort(win->window);
+  setwtitle(win->window, title);
 
   aglConfigure(AGL_RETAIN_RENDERERS, GL_TRUE);
 
@@ -125,10 +122,7 @@ void glfwSetWindowShouldClose(GLFWwindow *window, int value) {
 };
 const char *glfwGetWindowTitle(GLFWwindow *window) { return window->title; };
 void glfwSetWindowTitle(GLFWwindow *window, const char *title) {
-  window->title = title;
-  ConstStr255Param winTitle;
-  snprintf((char *)winTitle, 255, "\p%s", title);
-  SetWTitle(window->window, winTitle);
+  setwtitle(window->window, title);
 };
 void glfwSetWindowIcon(GLFWwindow *window, int count, const GLFWimage *images) {
   printf("unimpl: glfwSetWindowIcon\n");
@@ -149,8 +143,8 @@ void glfwSetWindowPos(GLFWwindow *window, int xpos, int ypos) {
 void glfwGetWindowSize(GLFWwindow *window, int *width, int *height) {
   Rect bounds;
   GetWindowBounds(window->window, kWindowStructureRgn, &bounds);
-  *width = bounds.right - bounds.left;
-  *height = bounds.bottom - bounds.top;
+  *width = bounds.right;
+  *height = bounds.bottom;
 };
 void glfwSetWindowSizeLimits(GLFWwindow *window, int minwidth, int minheight,
                              int maxwidth, int maxheight) {
@@ -162,8 +156,8 @@ void glfwSetWindowAspectRatio(GLFWwindow *window, int numer, int denom) {
 void glfwSetWindowSize(GLFWwindow *window, int width, int height) {
   Rect bounds;
   GetWindowBounds(window->window, kWindowStructureRgn, &bounds);
-  bounds.right = bounds.left + width;
-  bounds.bottom = bounds.top + height;
+  bounds.right = width;
+  bounds.bottom = height;
   SetWindowBounds(window->window, kWindowStructureRgn, &bounds);
 };
 void glfwGetFramebufferSize(GLFWwindow *window, int *width, int *height) {
@@ -287,17 +281,19 @@ glfwSetWindowContentScaleCallback(GLFWwindow *window,
 
 void glfwMakeContextCurrent(GLFWwindow *window) { ___curWindow = window; };
 GLFWwindow *glfwGetCurrentContext(void) { return ___curWindow; };
-void glfwSwapBuffers(GLFWwindow *window) {
 
+void glfwSwapBuffers(GLFWwindow *window) {
   BeginUpdate(window->window);
 
-  SystemTask();
+  InvalRect(&window->window->portRect);
 
   aglSwapBuffers(window->context);
 
   EndUpdate(window->window);
+
   YieldToAnyThread();
 };
+
 void glfwSwapInterval(int interval) { printf("unimpl: glfwSwapInterval\n"); };
 int glfwExtensionSupported(const char *extension) {
   const char *extensions = (const char *)glGetString(GL_EXTENSIONS);

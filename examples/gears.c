@@ -335,10 +335,6 @@ int main(int argc, char *argv[]) {
   // Main loop
   while (!glfwWindowShouldClose(window)) {
 
-#ifdef GLFW_EXTRA_MAC_FUNCTIONS
-    glfwMacWindowBegin(window);
-#endif
-
     // Draw gears
     draw();
 
@@ -348,10 +344,6 @@ int main(int argc, char *argv[]) {
     // Swap buffers
     glfwSwapBuffers(window);
     glfwPollEvents();
-
-#ifdef GLFW_EXTRA_MAC_FUNCTIONS
-    glfwMacWindowEnd(window);
-#endif
   }
 
   // Terminate GLFW

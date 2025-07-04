@@ -623,11 +623,9 @@ int main(void) {
 
   /* Main loop */
   while (!glfwWindowShouldClose(window)) {
-#ifdef GLFW_EXTRA_MAC_FUNCTIONS
-    glfwMacWindowBegin(window);
-#endif
+
     /* Timing */
-    t = glfwGetTime();
+    t = glfwGetTime() / 1000;
     dt = t - t_old;
     t_old = t;
 
@@ -637,10 +635,6 @@ int main(void) {
     /* Swap buffers */
     glfwSwapBuffers(window);
     glfwPollEvents();
-
-#ifdef GLFW_EXTRA_MAC_FUNCTIONS
-    glfwMacWindowEnd(window);
-#endif
   }
 
   glfwTerminate();

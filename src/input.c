@@ -12,28 +12,38 @@ void glfwPollEvents(void) {
   EventRecord event;
 
   while (!GetNextEvent(everyEvent, &event)) {
-    switch (event.what) {
-    case mouseDown: {
-      switch (FindWindow(event.where, &window)) {
-      case inDrag:
-        DragWindow(window, event.where, &qd.screenBits.bounds);
-        break;
-      case inGrow: {
-        long growResult =
-            GrowWindow(window, event.where, &qd.screenBits.bounds);
-        SizeWindow(window, growResult & 0xFFFF, growResult >> 16, false);
-      } break;
-      case inGoAway: {
-        if (TrackGoAway(window, event.where)) {
-          ___curWindow->shouldClose = true;
-        }
-      } break;
-      }
-    }
-    }
-    FlushEvents(everyEvent, -1);
     YieldToAnyThread();
   }
+
+  SystemTask();
+  switch (event.what) {
+  case updateEvt:
+    aglUpdateContext(___curWindow->context);
+    break;
+  case activateEvt:
+    GetWRefCon(window);
+    break;
+  case osEvt:
+    break;
+  case mouseDown: {
+    switch (FindWindow(event.where, &window)) {
+    case inDrag:
+      DragWindow(window, event.where, &qd.screenBits.bounds);
+      break;
+    case inGrow: {
+      long growResult = GrowWindow(window, event.where, &qd.screenBits.bounds);
+      SizeWindow(window, growResult & 0xFFFF, growResult >> 16, false);
+    } break;
+    case inGoAway: {
+      if (TrackGoAway(window, event.where)) {
+        ___curWindow->shouldClose = true;
+      }
+    } break;
+    }
+  }
+  }
+  FlushEvents(everyEvent, -1);
+  YieldToAnyThread();
 };
 void glfwWaitEvents(void) { /* ... */ };
 void glfwWaitEventsTimeout(double timeout) { /* ... */ };

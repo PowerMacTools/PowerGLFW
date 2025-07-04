@@ -78,10 +78,6 @@ int main(int argc, char **argv) {
   for (;;) {
     for (int i = 0; i < 4; i++) {
 
-#ifdef GLFW_EXTRA_MAC_FUNCTIONS
-      glfwMacWindowBegin(windows[i]);
-#endif
-
       glfwMakeContextCurrent(windows[i]);
       glClear(GL_COLOR_BUFFER_BIT);
       glfwSwapBuffers(windows[i]);
@@ -91,10 +87,6 @@ int main(int argc, char **argv) {
         glfwTerminate();
         exit(EXIT_SUCCESS);
       }
-
-#ifdef GLFW_EXTRA_MAC_FUNCTIONS
-      glfwMacWindowEnd(windows[i]);
-#endif
     }
 
     glfwWaitEvents();

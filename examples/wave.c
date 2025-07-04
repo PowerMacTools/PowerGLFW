@@ -389,10 +389,6 @@ int main(int argc, char *argv[]) {
 
   while (!glfwWindowShouldClose(window)) {
 
-#ifdef GLFW_EXTRA_MAC_FUNCTIONS
-    glfwMacWindowBegin(window);
-#endif
-
     t = glfwGetTime();
     dt_total = t - t_old;
     t_old = t;
