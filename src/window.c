@@ -24,8 +24,7 @@ GLFWwindow *___curWindow;
 
 GLFWwindow *glfwCreateWindow(int width, int height, const char *title,
                              GLFWmonitor *monitor, GLFWwindow *share) {
-
-  GLFWwindow *win = malloc(sizeof(GLFWwindow *));
+  GLFWwindow *win = gAlloactor.allocate(sizeof(GLFWwindow *), NULL);
 
   // Setup the Window
   InitGraf(&qd.thePort);

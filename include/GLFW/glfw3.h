@@ -466,7 +466,6 @@ typedef struct GLFWallocator {
  * GLFW API functions
  *************************************************************************/
 
-GLFWAPI int glfwInit(void);
 GLFWAPI void glfwTerminate(void);
 GLFWAPI void glfwInitHint(int hint, int value);
 GLFWAPI void glfwInitAllocator(const GLFWallocator *allocator);
@@ -612,6 +611,8 @@ GLFWAPI GLFWwindow *glfwGetCurrentContext(void);
 GLFWAPI void glfwSwapBuffers(GLFWwindow *window);
 GLFWAPI void glfwSwapInterval(int interval);
 GLFWAPI int glfwExtensionSupported(const char *extension);
+GLFWAPI GLFWglproc glfwGetProcAddress(const char *procname);
+GLFWAPI int glfwVulkanSupported(void);
 GLFWAPI const char **glfwGetRequiredInstanceExtensions(uint32_t *count);
 
 /*************************************************************************

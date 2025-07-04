@@ -1,5 +1,4 @@
-#include "MacTypes.h"
-#include "Processes.h"
+#include "MacMemory.h"
 #include "Timer.h"
 #include "internal.h"
 #include <GLFW/glfw3.h>
@@ -8,12 +7,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-UnsignedWide gLastMicroseconds;
-TimerUPP gTimerUPP;
-ProcessSerialNumber gPSN;
-
 int glfwInit(void) {
-  GetCurrentProcess(&gPSN);
+  MaxApplZone();
+  for (int i = 0; i < 35; i++) {
+    MoreMasters();
+  }
 
   gTM.tmAddr = NewTimerProc(timerUpdateFunc);
   gTM.tmWakeUp = 0;
@@ -27,7 +25,6 @@ int glfwInit(void) {
 
 void glfwTerminate(void) { RmvTime((QElemPtr)&gTM); };
 void glfwInitHint(int hint, int value) {};
-void glfwInitAllocator(const GLFWallocator *allocator) {};
 void glfwGetVersion(int *major, int *minor, int *rev) {
   *major = GLFW_VERSION_MAJOR;
   *minor = GLFW_VERSION_MINOR;

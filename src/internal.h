@@ -39,6 +39,7 @@ extern int aglErr;
 extern TMTask gTM;
 extern uint64_t gTimer;
 void timerUpdateFunc(void);
+extern struct GLFWallocator gAlloactor;
 
 // Execute an AGL function and then exit, printing the message, if it fails.
 #define AGL_ERROR(x)                                                           \
