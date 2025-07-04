@@ -20,7 +20,8 @@
 	(*agl_ctx->disp.alpha_func)(agl_ctx->rend, func, ref)
 
 #define glAreTexturesResident(n, textures, residences) \
-	(*agl_ctx->disp.are_textures_resident)(agl_ctx->rend, n, textures, residences)
+	(*agl_ctx->disp.are_textures_resident)(agl_ctx->rend, n, textures, \
+										   residences)
 
 #define glArrayElement(i) (*agl_ctx->disp.array_element)(agl_ctx->rend, i)
 
@@ -31,7 +32,7 @@
 
 #define glBitmap(width, height, xorig, yorig, xmove, ymove, bitmap) \
 	(*agl_ctx->disp.bitmap)(agl_ctx->rend, width, height, xorig, yorig, xmove, \
-													ymove, bitmap)
+							ymove, bitmap)
 
 #define glBlendFunc(sfactor, dfactor) \
 	(*agl_ctx->disp.blend_func)(agl_ctx->rend, sfactor, dfactor)
@@ -152,22 +153,22 @@
 
 #define glCopyTexImage1D(target, level, internalFormat, x, y, width, border) \
 	(*agl_ctx->disp.copy_tex_image1D)(agl_ctx->rend, target, level, \
-																		internalFormat, x, y, width, border)
+									  internalFormat, x, y, width, border)
 
 #define glCopyTexImage2D(target, level, internalFormat, x, y, width, height, \
-												 border) \
+						 border) \
 	(*agl_ctx->disp.copy_tex_image2D)(agl_ctx->rend, target, level, \
-																		internalFormat, x, y, width, height, \
-																		border)
+									  internalFormat, x, y, width, height, \
+									  border)
 
 #define glCopyTexSubImage1D(target, level, xoffset, x, y, width) \
-	(*agl_ctx->disp.copy_tex_sub_image1D)(agl_ctx->rend, target, level, xoffset, \
-																				x, y, width)
+	(*agl_ctx->disp.copy_tex_sub_image1D)(agl_ctx->rend, target, level, \
+										  xoffset, x, y, width)
 
 #define glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, \
-														height) \
-	(*agl_ctx->disp.copy_tex_sub_image2D)(agl_ctx->rend, target, level, xoffset, \
-																				yoffset, x, y, width, height)
+							height) \
+	(*agl_ctx->disp.copy_tex_sub_image2D)( \
+		agl_ctx->rend, target, level, xoffset, yoffset, x, y, width, height)
 
 #define glCullFace(mode) (*agl_ctx->disp.cull_face)(agl_ctx->rend, mode)
 
@@ -199,7 +200,7 @@
 
 #define glDrawPixels(width, height, format, type, pixels) \
 	(*agl_ctx->disp.draw_pixels)(agl_ctx->rend, width, height, format, type, \
-															 pixels)
+								 pixels)
 
 #define glEdgeFlag(flag) (*agl_ctx->disp.edge_flag)(agl_ctx->rend, flag)
 
@@ -263,7 +264,8 @@
 #define glFrontFace(mode) (*agl_ctx->disp.front_face)(agl_ctx->rend, mode)
 
 #define glFrustum(left, right, bottom, top, zNear, zFar) \
-	(*agl_ctx->disp.frustum)(agl_ctx->rend, left, right, bottom, top, zNear, zFar)
+	(*agl_ctx->disp.frustum)(agl_ctx->rend, left, right, bottom, top, zNear, \
+							 zFar)
 
 #define glGenLists(range) (*agl_ctx->disp.gen_lists)(agl_ctx->rend, range)
 
@@ -342,15 +344,15 @@
 
 #define glGetTexImage(target, level, format, type, pixels) \
 	(*agl_ctx->disp.get_tex_image)(agl_ctx->rend, target, level, format, type, \
-																 pixels)
+								   pixels)
 
 #define glGetTexLevelParameterfv(target, level, pname, params) \
 	(*agl_ctx->disp.get_tex_level_parameterfv)(agl_ctx->rend, target, level, \
-																						 pname, params)
+											   pname, params)
 
 #define glGetTexLevelParameteriv(target, level, pname, params) \
 	(*agl_ctx->disp.get_tex_level_parameteriv)(agl_ctx->rend, target, level, \
-																						 pname, params)
+											   pname, params)
 
 #define glGetTexParameterfv(target, pname, params) \
 	(*agl_ctx->disp.get_tex_parameterfv)(agl_ctx->rend, target, pname, params)
@@ -444,14 +446,14 @@
 	(*agl_ctx->disp.map1f)(agl_ctx->rend, target, u1, u2, stride, order, points)
 
 #define glMap2d(target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, \
-								points) \
+				points) \
 	(*agl_ctx->disp.map2d)(agl_ctx->rend, target, u1, u2, ustride, uorder, v1, \
-												 v2, vstride, vorder, points)
+						   v2, vstride, vorder, points)
 
 #define glMap2f(target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, \
-								points) \
+				points) \
 	(*agl_ctx->disp.map2f)(agl_ctx->rend, target, u1, u2, ustride, uorder, v1, \
-												 v2, vstride, vorder, points)
+						   v2, vstride, vorder, points)
 
 #define glMapGrid1d(un, u1, u2) \
 	(*agl_ctx->disp.map_grid1d)(agl_ctx->rend, un, u1, u2)
@@ -634,7 +636,7 @@
 
 #define glReadPixels(x, y, width, height, format, type, pixels) \
 	(*agl_ctx->disp.read_pixels)(agl_ctx->rend, x, y, width, height, format, \
-															 type, pixels)
+								 type, pixels)
 
 #define glRectd(x1, y1, x2, y2) \
 	(*agl_ctx->disp.rectd)(agl_ctx->rend, x1, y1, x2, y2)
@@ -757,7 +759,8 @@
 #define glTexCoord4sv(v) (*agl_ctx->disp.tex_coord4sv)(agl_ctx->rend, v)
 
 #define glTexCoordPointer(size, type, stride, pointer) \
-	(*agl_ctx->disp.tex_coord_pointer)(agl_ctx->rend, size, type, stride, pointer)
+	(*agl_ctx->disp.tex_coord_pointer)(agl_ctx->rend, size, type, stride, \
+									   pointer)
 
 #define glTexEnvf(target, pname, param) \
 	(*agl_ctx->disp.tex_envf)(agl_ctx->rend, target, pname, param)
@@ -790,14 +793,14 @@
 	(*agl_ctx->disp.tex_geniv)(agl_ctx->rend, coord, pname, params)
 
 #define glTexImage1D(target, level, internalformat, width, border, format, \
-										 type, pixels) \
+					 type, pixels) \
 	(*agl_ctx->disp.tex_image1D)(agl_ctx->rend, target, level, internalformat, \
-															 width, border, format, type, pixels)
+								 width, border, format, type, pixels)
 
 #define glTexImage2D(target, level, internalformat, width, height, border, \
-										 format, type, pixels) \
+					 format, type, pixels) \
 	(*agl_ctx->disp.tex_image2D)(agl_ctx->rend, target, level, internalformat, \
-															 width, height, border, format, type, pixels)
+								 width, height, border, format, type, pixels)
 
 #define glTexParameterf(target, pname, param) \
 	(*agl_ctx->disp.tex_parameterf)(agl_ctx->rend, target, pname, param)
@@ -813,13 +816,13 @@
 
 #define glTexSubImage1D(target, level, xoffset, width, format, type, pixels) \
 	(*agl_ctx->disp.tex_sub_image1D)(agl_ctx->rend, target, level, xoffset, \
-																	 width, format, type, pixels)
+									 width, format, type, pixels)
 
 #define glTexSubImage2D(target, level, xoffset, yoffset, width, height, \
-												format, type, pixels) \
+						format, type, pixels) \
 	(*agl_ctx->disp.tex_sub_image2D)(agl_ctx->rend, target, level, xoffset, \
-																	 yoffset, width, height, format, type, \
-																	 pixels)
+									 yoffset, width, height, format, type, \
+									 pixels)
 
 #define glTranslated(x, y, z) \
 	(*agl_ctx->disp.translated)(agl_ctx->rend, x, y, z)

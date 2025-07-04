@@ -7,7 +7,7 @@ GLFWmonitor* glfwGetWindowMonitor(GLFWwindow* window) {
 	return NULL;
 };
 void glfwSetWindowMonitor(GLFWwindow* window, GLFWmonitor* monitor, int xpos,
-													int ypos, int width, int height, int refreshRate) {
+						  int ypos, int width, int height, int refreshRate) {
 	printf("unimpl: glfwSetWindowMonitor\n");
 };
 GLFWmonitor** glfwGetMonitors(int* count) {
@@ -24,21 +24,21 @@ void glfwGetMonitorPos(GLFWmonitor* monitor, int* xpos, int* ypos) {
 	*ypos = 0;
 };
 void glfwGetMonitorWorkarea(GLFWmonitor* monitor, int* xpos, int* ypos,
-														int* width, int* height) {
+							int* width, int* height) {
 	printf("unimpl: glfwGetMonitorWorkArea\n");
-	*xpos		= 0;
-	*ypos		= 0;
+	*xpos	= 0;
+	*ypos	= 0;
 	*width	= 0;
 	*height = 0;
 };
 void glfwGetMonitorPhysicalSize(GLFWmonitor* monitor, int* widthMM,
-																int* heightMM) {
+								int* heightMM) {
 	printf("unimpl: glfwGetMonitorPhysicalSize\n");
-	*widthMM	= 0;
+	*widthMM  = 0;
 	*heightMM = 0;
 };
 void glfwGetMonitorContentScale(GLFWmonitor* monitor, float* xscale,
-																float* yscale) {
+								float* yscale) {
 	printf("unimpl: glfwGetMonitorContentScale\n");
 	*xscale = 0;
 	*yscale = 0;

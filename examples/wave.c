@@ -41,15 +41,15 @@ struct Vertex {
 	GLfloat r, g, b;
 };
 
-#define GRIDW			50
-#define GRIDH			50
+#define GRIDW	  50
+#define GRIDH	  50
 #define VERTEXNUM (GRIDW * GRIDH)
 
-#define QUADW		(GRIDW - 1)
-#define QUADH		(GRIDH - 1)
+#define QUADW	(GRIDW - 1)
+#define QUADH	(GRIDH - 1)
 #define QUADNUM (QUADW * QUADH)
 
-GLuint				quad[4 * QUADNUM];
+GLuint		  quad[4 * QUADNUM];
 struct Vertex vertex[VERTEXNUM];
 
 /* The grid will look like this:
@@ -88,9 +88,9 @@ void init_vertices(void) {
 
 			vertex[p].g = (GLfloat)y / (GLfloat)GRIDH;
 			YieldToAnyThread();
-			vertex[p].b =
-					1.f -
-					((GLfloat)x / (GLfloat)GRIDW + (GLfloat)y / (GLfloat)GRIDH) / 2.f;
+			vertex[p].b = 1.f - ((GLfloat)x / (GLfloat)GRIDW +
+								 (GLfloat)y / (GLfloat)GRIDH) /
+									2.f;
 			YieldToAnyThread();
 		}
 	}
@@ -122,7 +122,7 @@ double ax[GRIDW][GRIDH], ay[GRIDW][GRIDH];
 //========================================================================
 
 void init_grid(void) {
-	int		 x, y;
+	int	   x, y;
 	double dx, dy, d;
 
 	for(y = 0; y < GRIDH; y++) {
@@ -188,7 +188,7 @@ void init_opengl(void) {
 	glEnableClientState(GL_COLOR_ARRAY);
 	glVertexPointer(3, GL_FLOAT, sizeof(struct Vertex), vertex);
 	glColorPointer(3, GL_FLOAT, sizeof(struct Vertex),
-								 &vertex[0].r); // Pointer to the first color
+				   &vertex[0].r); // Pointer to the first color
 
 	glPointSize(2.0);
 
@@ -206,7 +206,7 @@ void adjust_grid(void) {
 
 	for(y = 0; y < GRIDH; y++) {
 		for(x = 0; x < GRIDW; x++) {
-			pos						= y * GRIDW + x;
+			pos			  = y * GRIDW + x;
 			vertex[pos].z = (float)(p[x][y] * (1.0 / 50.0));
 		}
 	}
@@ -217,7 +217,7 @@ void adjust_grid(void) {
 //========================================================================
 
 void calc_grid(void) {
-	int		 x, y, x2, y2;
+	int	   x, y, x2, y2;
 	double time_step = dt * ANIMATION_SPEED;
 
 	// Compute accelerations
@@ -243,9 +243,9 @@ void calc_grid(void) {
 	for(x = 1; x < GRIDW; x++) {
 		x2 = x - 1;
 		for(y = 1; y < GRIDH; y++) {
-			y2 = y - 1;
-			p[x][y] =
-					p[x][y] + (vx[x2][y] - vx[x][y] + vy[x][y2] - vy[x][y]) * time_step;
+			y2		= y - 1;
+			p[x][y] = p[x][y] +
+					  (vx[x2][y] - vx[x][y] + vy[x][y2] - vy[x][y]) * time_step;
 		}
 	}
 }
@@ -263,7 +263,7 @@ static void error_callback(int error, const char* description) {
 //========================================================================
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action,
-									int mods) {
+				  int mods) {
 	if(action != GLFW_PRESS) return;
 
 	switch(key) {
@@ -302,7 +302,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action,
 //========================================================================
 
 void mouse_button_callback(GLFWwindow* window, int button, int action,
-													 int mods) {
+						   int mods) {
 	if(button != GLFW_MOUSE_BUTTON_LEFT) return;
 
 	if(action == GLFW_PRESS) {
@@ -340,7 +340,7 @@ void scroll_callback(GLFWwindow* window, double x, double y) {
 //========================================================================
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
-	float	 ratio = 1.f;
+	float  ratio = 1.f;
 	mat4x4 projection;
 
 	if(height > 0) ratio = (float)width / (float)height;
@@ -351,7 +351,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	// Change to the projection matrix and set our viewing volume
 	glMatrixMode(GL_PROJECTION);
 	mat4x4_perspective(projection, 60.f * (float)M_PI / 180.f, ratio, 1.f,
-										 1024.f);
+					   1024.f);
 	glLoadMatrixf((const GLfloat*)projection);
 }
 
@@ -361,8 +361,8 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 
 int main(int argc, char* argv[]) {
 	GLFWwindow* window;
-	double			t, dt_total, t_old;
-	int					width, height;
+	double		t, dt_total, t_old;
+	int			width, height;
 
 	glfwSetErrorCallback(error_callback);
 
@@ -399,9 +399,9 @@ int main(int argc, char* argv[]) {
 
 	while(!glfwWindowShouldClose(window)) {
 
-		t				 = glfwGetTime();
+		t		 = glfwGetTime();
 		dt_total = t - t_old;
-		t_old		 = t;
+		t_old	 = t;
 
 		// Safety - iterate if dt_total is too large
 		while(dt_total > 0.f) {

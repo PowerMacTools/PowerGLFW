@@ -48,8 +48,8 @@
  **/
 
 static void gear(GLfloat inner_radius, GLfloat outer_radius, GLfloat width,
-								 GLint teeth, GLfloat tooth_depth) {
-	GLint		i;
+				 GLint teeth, GLfloat tooth_depth) {
+	GLint	i;
 	GLfloat r0, r1, r2;
 	GLfloat angle, da;
 	GLfloat u, v, len;
@@ -68,12 +68,15 @@ static void gear(GLfloat inner_radius, GLfloat outer_radius, GLfloat width,
 	glBegin(GL_QUAD_STRIP);
 	for(i = 0; i <= teeth; i++) {
 		angle = i * 2.f * (float)M_PI / teeth;
-		glVertex3f(r0 * (float)cos(angle), r0 * (float)sin(angle), width * 0.5f);
-		glVertex3f(r1 * (float)cos(angle), r1 * (float)sin(angle), width * 0.5f);
+		glVertex3f(r0 * (float)cos(angle), r0 * (float)sin(angle),
+				   width * 0.5f);
+		glVertex3f(r1 * (float)cos(angle), r1 * (float)sin(angle),
+				   width * 0.5f);
 		if(i < teeth) {
-			glVertex3f(r0 * (float)cos(angle), r0 * (float)sin(angle), width * 0.5f);
+			glVertex3f(r0 * (float)cos(angle), r0 * (float)sin(angle),
+					   width * 0.5f);
 			glVertex3f(r1 * (float)cos(angle + 3 * da),
-								 r1 * (float)sin(angle + 3 * da), width * 0.5f);
+					   r1 * (float)sin(angle + 3 * da), width * 0.5f);
 		}
 	}
 	glEnd();
@@ -84,13 +87,14 @@ static void gear(GLfloat inner_radius, GLfloat outer_radius, GLfloat width,
 	for(i = 0; i < teeth; i++) {
 		angle = i * 2.f * (float)M_PI / teeth;
 
-		glVertex3f(r1 * (float)cos(angle), r1 * (float)sin(angle), width * 0.5f);
+		glVertex3f(r1 * (float)cos(angle), r1 * (float)sin(angle),
+				   width * 0.5f);
 		glVertex3f(r2 * (float)cos(angle + da), r2 * (float)sin(angle + da),
-							 width * 0.5f);
-		glVertex3f(r2 * (float)cos(angle + 2 * da), r2 * (float)sin(angle + 2 * da),
-							 width * 0.5f);
-		glVertex3f(r1 * (float)cos(angle + 3 * da), r1 * (float)sin(angle + 3 * da),
-							 width * 0.5f);
+				   width * 0.5f);
+		glVertex3f(r2 * (float)cos(angle + 2 * da),
+				   r2 * (float)sin(angle + 2 * da), width * 0.5f);
+		glVertex3f(r1 * (float)cos(angle + 3 * da),
+				   r1 * (float)sin(angle + 3 * da), width * 0.5f);
 	}
 	glEnd();
 
@@ -100,12 +104,15 @@ static void gear(GLfloat inner_radius, GLfloat outer_radius, GLfloat width,
 	glBegin(GL_QUAD_STRIP);
 	for(i = 0; i <= teeth; i++) {
 		angle = i * 2.f * (float)M_PI / teeth;
-		glVertex3f(r1 * (float)cos(angle), r1 * (float)sin(angle), -width * 0.5f);
-		glVertex3f(r0 * (float)cos(angle), r0 * (float)sin(angle), -width * 0.5f);
+		glVertex3f(r1 * (float)cos(angle), r1 * (float)sin(angle),
+				   -width * 0.5f);
+		glVertex3f(r0 * (float)cos(angle), r0 * (float)sin(angle),
+				   -width * 0.5f);
 		if(i < teeth) {
 			glVertex3f(r1 * (float)cos(angle + 3 * da),
-								 r1 * (float)sin(angle + 3 * da), -width * 0.5f);
-			glVertex3f(r0 * (float)cos(angle), r0 * (float)sin(angle), -width * 0.5f);
+					   r1 * (float)sin(angle + 3 * da), -width * 0.5f);
+			glVertex3f(r0 * (float)cos(angle), r0 * (float)sin(angle),
+					   -width * 0.5f);
 		}
 	}
 	glEnd();
@@ -116,13 +123,14 @@ static void gear(GLfloat inner_radius, GLfloat outer_radius, GLfloat width,
 	for(i = 0; i < teeth; i++) {
 		angle = i * 2.f * (float)M_PI / teeth;
 
-		glVertex3f(r1 * (float)cos(angle + 3 * da), r1 * (float)sin(angle + 3 * da),
-							 -width * 0.5f);
-		glVertex3f(r2 * (float)cos(angle + 2 * da), r2 * (float)sin(angle + 2 * da),
-							 -width * 0.5f);
+		glVertex3f(r1 * (float)cos(angle + 3 * da),
+				   r1 * (float)sin(angle + 3 * da), -width * 0.5f);
+		glVertex3f(r2 * (float)cos(angle + 2 * da),
+				   r2 * (float)sin(angle + 2 * da), -width * 0.5f);
 		glVertex3f(r2 * (float)cos(angle + da), r2 * (float)sin(angle + da),
-							 -width * 0.5f);
-		glVertex3f(r1 * (float)cos(angle), r1 * (float)sin(angle), -width * 0.5f);
+				   -width * 0.5f);
+		glVertex3f(r1 * (float)cos(angle), r1 * (float)sin(angle),
+				   -width * 0.5f);
 	}
 	glEnd();
 
@@ -131,30 +139,32 @@ static void gear(GLfloat inner_radius, GLfloat outer_radius, GLfloat width,
 	for(i = 0; i < teeth; i++) {
 		angle = i * 2.f * (float)M_PI / teeth;
 
-		glVertex3f(r1 * (float)cos(angle), r1 * (float)sin(angle), width * 0.5f);
-		glVertex3f(r1 * (float)cos(angle), r1 * (float)sin(angle), -width * 0.5f);
-		u		= r2 * (float)cos(angle + da) - r1 * (float)cos(angle);
-		v		= r2 * (float)sin(angle + da) - r1 * (float)sin(angle);
+		glVertex3f(r1 * (float)cos(angle), r1 * (float)sin(angle),
+				   width * 0.5f);
+		glVertex3f(r1 * (float)cos(angle), r1 * (float)sin(angle),
+				   -width * 0.5f);
+		u	= r2 * (float)cos(angle + da) - r1 * (float)cos(angle);
+		v	= r2 * (float)sin(angle + da) - r1 * (float)sin(angle);
 		len = (float)sqrt(u * u + v * v);
 		u /= len;
 		v /= len;
 		glNormal3f(v, -u, 0.0);
 		glVertex3f(r2 * (float)cos(angle + da), r2 * (float)sin(angle + da),
-							 width * 0.5f);
+				   width * 0.5f);
 		glVertex3f(r2 * (float)cos(angle + da), r2 * (float)sin(angle + da),
-							 -width * 0.5f);
+				   -width * 0.5f);
 		glNormal3f((float)cos(angle), (float)sin(angle), 0.f);
-		glVertex3f(r2 * (float)cos(angle + 2 * da), r2 * (float)sin(angle + 2 * da),
-							 width * 0.5f);
-		glVertex3f(r2 * (float)cos(angle + 2 * da), r2 * (float)sin(angle + 2 * da),
-							 -width * 0.5f);
+		glVertex3f(r2 * (float)cos(angle + 2 * da),
+				   r2 * (float)sin(angle + 2 * da), width * 0.5f);
+		glVertex3f(r2 * (float)cos(angle + 2 * da),
+				   r2 * (float)sin(angle + 2 * da), -width * 0.5f);
 		u = r1 * (float)cos(angle + 3 * da) - r2 * (float)cos(angle + 2 * da);
 		v = r1 * (float)sin(angle + 3 * da) - r2 * (float)sin(angle + 2 * da);
 		glNormal3f(v, -u, 0.f);
-		glVertex3f(r1 * (float)cos(angle + 3 * da), r1 * (float)sin(angle + 3 * da),
-							 width * 0.5f);
-		glVertex3f(r1 * (float)cos(angle + 3 * da), r1 * (float)sin(angle + 3 * da),
-							 -width * 0.5f);
+		glVertex3f(r1 * (float)cos(angle + 3 * da),
+				   r1 * (float)sin(angle + 3 * da), width * 0.5f);
+		glVertex3f(r1 * (float)cos(angle + 3 * da),
+				   r1 * (float)sin(angle + 3 * da), -width * 0.5f);
 		glNormal3f((float)cos(angle), (float)sin(angle), 0.f);
 	}
 
@@ -170,14 +180,16 @@ static void gear(GLfloat inner_radius, GLfloat outer_radius, GLfloat width,
 	for(i = 0; i <= teeth; i++) {
 		angle = i * 2.f * (float)M_PI / teeth;
 		glNormal3f(-(float)cos(angle), -(float)sin(angle), 0.f);
-		glVertex3f(r0 * (float)cos(angle), r0 * (float)sin(angle), -width * 0.5f);
-		glVertex3f(r0 * (float)cos(angle), r0 * (float)sin(angle), width * 0.5f);
+		glVertex3f(r0 * (float)cos(angle), r0 * (float)sin(angle),
+				   -width * 0.5f);
+		glVertex3f(r0 * (float)cos(angle), r0 * (float)sin(angle),
+				   width * 0.5f);
 	}
 	glEnd();
 }
 
 static GLfloat view_rotx = 20.f, view_roty = 30.f, view_rotz = 0.f;
-static GLint	 gear1, gear2, gear3;
+static GLint   gear1, gear2, gear3;
 static GLfloat angle = 0.f;
 
 /* OpenGL draw function & timing */
@@ -250,8 +262,8 @@ void reshape(GLFWwindow* window, int width, int height) {
 	GLfloat xmax, znear, zfar;
 
 	znear = 5.0f;
-	zfar	= 30.0f;
-	xmax	= znear * 0.5f;
+	zfar  = 30.0f;
+	xmax  = znear * 0.5f;
 
 	glViewport(0, 0, (GLint)width, (GLint)height);
 	glMatrixMode(GL_PROJECTION);
@@ -264,8 +276,8 @@ void reshape(GLFWwindow* window, int width, int height) {
 
 /* program & OpenGL initialization */
 static void init(void) {
-	static GLfloat pos[4]		= {5.f, 5.f, 10.f, 0.f};
-	static GLfloat red[4]		= {0.8f, 0.1f, 0.f, 1.f};
+	static GLfloat pos[4]	= {5.f, 5.f, 10.f, 0.f};
+	static GLfloat red[4]	= {0.8f, 0.1f, 0.f, 1.f};
 	static GLfloat green[4] = {0.f, 0.8f, 0.2f, 1.f};
 	static GLfloat blue[4]	= {0.2f, 0.2f, 1.f, 1.f};
 
@@ -300,7 +312,7 @@ static void init(void) {
 /* program entry */
 int main(int argc, char* argv[]) {
 	GLFWwindow* window;
-	int					width, height;
+	int			width, height;
 
 	if(!glfwInit()) {
 		fprintf(stderr, "Failed to initialize GLFW\n");

@@ -14,7 +14,7 @@
 
 		You should have received a copy of the GNU Library General Public
 		License along with this library; if not, write to the Free
-		Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+		Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 
 		Sam Lantinga
 		slouken@libsdl.org
@@ -118,8 +118,8 @@
 #else
 /* Add any special compiler-specific cases here */
 #if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__) || \
-		defined(__SC__) || defined(__WATCOMC__) || defined(__LCC__) || \
-		defined(__DECC) || defined(__EABI__)
+	defined(__SC__) || defined(__WATCOMC__) || defined(__LCC__) || \
+	defined(__DECC) || defined(__EABI__)
 #ifndef __inline__
 #define __inline__ __inline
 #endif

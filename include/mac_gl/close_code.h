@@ -14,7 +14,7 @@
 
 		You should have received a copy of the GNU Library General Public
 		License along with this library; if not, write to the Free
-		Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+		Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 
 		Sam Lantinga
 		slouken@libsdl.org
@@ -28,7 +28,7 @@
 
 /* Reset structure packing at previous byte alignment */
 #if defined(_MSC_VER) || defined(__MWERKS__) || defined(__WATCOMC__) || \
-		defined(__BORLANDC__)
+	defined(__BORLANDC__)
 #ifdef __BORLANDC__
 #pragma nopackwarning
 #endif

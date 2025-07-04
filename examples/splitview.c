@@ -49,15 +49,15 @@ static int do_redraw = 1;
 // Draw a solid torus (use a display list for the model)
 //========================================================================
 
-#define TORUS_MAJOR			1.5
-#define TORUS_MINOR			0.5
+#define TORUS_MAJOR		1.5
+#define TORUS_MINOR		0.5
 #define TORUS_MAJOR_RES 32
 #define TORUS_MINOR_RES 32
 
 static void drawTorus(void) {
 	static GLuint torus_list = 0;
-	int						i, j, k;
-	double				s, t, x, y, z, nx, ny, nz, scale, twopi;
+	int			  i, j, k;
+	double		  s, t, x, y, z, nx, ny, nz, scale, twopi;
 
 	if(!torus_list) {
 		// Start recording displaylist
@@ -74,16 +74,18 @@ static void drawTorus(void) {
 					t = j % TORUS_MAJOR_RES;
 
 					// Calculate point on surface
-					x = (TORUS_MAJOR + TORUS_MINOR * cos(s * twopi / TORUS_MINOR_RES)) *
-							cos(t * twopi / TORUS_MAJOR_RES);
+					x = (TORUS_MAJOR +
+						 TORUS_MINOR * cos(s * twopi / TORUS_MINOR_RES)) *
+						cos(t * twopi / TORUS_MAJOR_RES);
 					y = TORUS_MINOR * sin(s * twopi / TORUS_MINOR_RES);
-					z = (TORUS_MAJOR + TORUS_MINOR * cos(s * twopi / TORUS_MINOR_RES)) *
-							sin(t * twopi / TORUS_MAJOR_RES);
+					z = (TORUS_MAJOR +
+						 TORUS_MINOR * cos(s * twopi / TORUS_MINOR_RES)) *
+						sin(t * twopi / TORUS_MAJOR_RES);
 
 					// Calculate surface normal
-					nx		= x - TORUS_MAJOR * cos(t * twopi / TORUS_MAJOR_RES);
-					ny		= y;
-					nz		= z - TORUS_MAJOR * sin(t * twopi / TORUS_MAJOR_RES);
+					nx	  = x - TORUS_MAJOR * cos(t * twopi / TORUS_MAJOR_RES);
+					ny	  = y;
+					nz	  = z - TORUS_MAJOR * sin(t * twopi / TORUS_MAJOR_RES);
 					scale = 1.0 / sqrt(nx * nx + ny * ny + nz * nz);
 					nx *= scale;
 					ny *= scale;
@@ -112,7 +114,7 @@ static void drawTorus(void) {
 static void drawScene(void) {
 	const GLfloat model_diffuse[4]	= {1.0f, 0.8f, 0.8f, 1.0f};
 	const GLfloat model_specular[4] = {0.6f, 0.6f, 0.6f, 1.0f};
-	const GLfloat model_shininess		= 20.0f;
+	const GLfloat model_shininess	= 20.0f;
 
 	glPushMatrix();
 
@@ -140,8 +142,8 @@ static void drawScene(void) {
 //========================================================================
 
 static void drawGrid(float scale, int steps) {
-	int		 i;
-	float	 x, y;
+	int	   i;
+	float  x, y;
 	mat4x4 view;
 
 	glPushMatrix();
@@ -152,9 +154,9 @@ static void drawGrid(float scale, int steps) {
 
 	// Setup modelview matrix (flat XY view)
 	{
-		vec3 eye		= {0.f, 0.f, 1.f};
+		vec3 eye	= {0.f, 0.f, 1.f};
 		vec3 center = {0.f, 0.f, 0.f};
-		vec3 up			= {0.f, 1.f, 0.f};
+		vec3 up		= {0.f, 1.f, 0.f};
 		mat4x4_look_at(view, eye, center, up);
 	}
 	glLoadMatrixf((const GLfloat*)view);
@@ -202,8 +204,8 @@ static void drawAllViews(void) {
 	const GLfloat light_diffuse[4]	= {1.0f, 1.0f, 1.0f, 1.0f};
 	const GLfloat light_specular[4] = {1.0f, 1.0f, 1.0f, 1.0f};
 	const GLfloat light_ambient[4]	= {0.2f, 0.2f, 0.3f, 1.0f};
-	float					aspect;
-	mat4x4				view, projection;
+	float		  aspect;
+	mat4x4		  view, projection;
 
 	// Calculate aspect of window
 	if(height > 0) aspect = (float)width / (float)height;
@@ -241,9 +243,9 @@ static void drawAllViews(void) {
 	glScissor(0, height / 2, width / 2, height / 2);
 	glMatrixMode(GL_MODELVIEW);
 	{
-		vec3 eye		= {0.f, 10.f, 1e-3f};
+		vec3 eye	= {0.f, 10.f, 1e-3f};
 		vec3 center = {0.f, 0.f, 0.f};
-		vec3 up			= {0.f, 1.f, 0.f};
+		vec3 up		= {0.f, 1.f, 0.f};
 		mat4x4_look_at(view, eye, center, up);
 	}
 	glLoadMatrixf((const GLfloat*)view);
@@ -255,9 +257,9 @@ static void drawAllViews(void) {
 	glScissor(0, 0, width / 2, height / 2);
 	glMatrixMode(GL_MODELVIEW);
 	{
-		vec3 eye		= {0.f, 0.f, 10.f};
+		vec3 eye	= {0.f, 0.f, 10.f};
 		vec3 center = {0.f, 0.f, 0.f};
-		vec3 up			= {0.f, 1.f, 0.f};
+		vec3 up		= {0.f, 1.f, 0.f};
 		mat4x4_look_at(view, eye, center, up);
 	}
 	glLoadMatrixf((const GLfloat*)view);
@@ -269,9 +271,9 @@ static void drawAllViews(void) {
 	glScissor(width / 2, 0, width / 2, height / 2);
 	glMatrixMode(GL_MODELVIEW);
 	{
-		vec3 eye		= {10.f, 0.f, 0.f};
+		vec3 eye	= {10.f, 0.f, 0.f};
 		vec3 center = {0.f, 0.f, 0.f};
-		vec3 up			= {0.f, 1.f, 0.f};
+		vec3 up		= {0.f, 1.f, 0.f};
 		mat4x4_look_at(view, eye, center, up);
 	}
 	glLoadMatrixf((const GLfloat*)view);
@@ -294,7 +296,8 @@ static void drawAllViews(void) {
 
 	// Setup perspective projection matrix
 	glMatrixMode(GL_PROJECTION);
-	mat4x4_perspective(projection, 65.f * (float)M_PI / 180.f, aspect, 1.f, 50.f);
+	mat4x4_perspective(projection, 65.f * (float)M_PI / 180.f, aspect, 1.f,
+					   50.f);
 	glLoadMatrixf((const GLfloat*)projection);
 
 	// Upper right view (PERSPECTIVE VIEW)
@@ -302,9 +305,9 @@ static void drawAllViews(void) {
 	glScissor(width / 2, height / 2, width / 2, height / 2);
 	glMatrixMode(GL_MODELVIEW);
 	{
-		vec3 eye		= {3.f, 1.5f, 3.f};
+		vec3 eye	= {3.f, 1.5f, 3.f};
 		vec3 center = {0.f, 0.f, 0.f};
-		vec3 up			= {0.f, 1.f, 0.f};
+		vec3 up		= {0.f, 1.f, 0.f};
 		mat4x4_look_at(view, eye, center, up);
 	}
 	glLoadMatrixf((const GLfloat*)view);
@@ -343,7 +346,7 @@ static void drawAllViews(void) {
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		glTranslatef((GLfloat)((active_view - 1) & 1),
-								 (GLfloat)(1 - (active_view - 1) / 2), 0.0f);
+					 (GLfloat)(1 - (active_view - 1) / 2), 0.0f);
 
 		glColor3f(1.0f, 1.0f, 0.6f);
 
@@ -362,8 +365,8 @@ static void drawAllViews(void) {
 //========================================================================
 
 static void framebufferSizeFun(GLFWwindow* window, int w, int h) {
-	width			= w;
-	height		= h > 0 ? h : 1;
+	width	  = w;
+	height	  = h > 0 ? h : 1;
 	do_redraw = 1;
 }
 
@@ -382,7 +385,7 @@ static void windowRefreshFun(GLFWwindow* window) {
 //========================================================================
 
 static void cursorPosFun(GLFWwindow* window, double x, double y) {
-	int		 wnd_width, wnd_height, fb_width, fb_height;
+	int	   wnd_width, wnd_height, fb_width, fb_height;
 	double scale;
 
 	glfwGetWindowSize(window, &wnd_width, &wnd_height);
@@ -425,7 +428,7 @@ static void cursorPosFun(GLFWwindow* window, double x, double y) {
 //========================================================================
 
 static void mouseButtonFun(GLFWwindow* window, int button, int action,
-													 int mods) {
+						   int mods) {
 	if((button == GLFW_MOUSE_BUTTON_LEFT) && action == GLFW_PRESS) {
 		// Detect which of the four views was clicked
 		active_view = 1;
@@ -440,7 +443,7 @@ static void mouseButtonFun(GLFWwindow* window, int button, int action,
 }
 
 static void key_callback(GLFWwindow* window, int key, int scancode, int action,
-												 int mods) {
+						 int mods) {
 	if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GLFW_TRUE);
 }

@@ -51,26 +51,27 @@ void init(void);
 void display(void);
 void reshape(GLFWwindow* window, int w, int h);
 void key_callback(GLFWwindow* window, int key, int scancode, int action,
-									int mods);
+				  int mods);
 void mouse_button_callback(GLFWwindow* window, int button, int action,
-													 int mods);
+						   int mods);
 void cursor_position_callback(GLFWwindow* window, double x, double y);
 void DrawBoingBall(void);
 void BounceBall(double dt);
 void DrawBoingBallBand(GLfloat long_lo, GLfloat long_hi);
 void DrawGrid(void);
 
-#define RADIUS				 70.f
+#define RADIUS		   70.f
 #define STEP_LONGITUDE 22.5f /* 22.5 makes 8 bands like original Boing */
-#define STEP_LATITUDE	 22.5f
+#define STEP_LATITUDE  22.5f
 
 #define DIST_BALL (RADIUS * 2.f + RADIUS * 0.1f)
 
 #define VIEW_SCENE_DIST \
-	(DIST_BALL * 3.f + 200.f) /* distance from viewer to middle of boing area */
-#define GRID_SIZE			(RADIUS * 4.5f) /* length (width) of grid */
+	(DIST_BALL * 3.f + 200.f) /* distance from viewer to middle of boing area \
+							   */
+#define GRID_SIZE	  (RADIUS * 4.5f) /* length (width) of grid */
 #define BOUNCE_HEIGHT (RADIUS * 2.1f)
-#define BOUNCE_WIDTH	(RADIUS * 2.1f)
+#define BOUNCE_WIDTH  (RADIUS * 2.1f)
 
 #define SHADOW_OFFSET_X -20.f
 #define SHADOW_OFFSET_Y 10.f
@@ -96,21 +97,21 @@ typedef struct {
 } vertex_t;
 
 /* Global vars */
-int						 windowed_xpos, windowed_ypos, windowed_width, windowed_height;
-int						 width, height;
-GLfloat				 deg_rot_y		 = 0.f;
-GLfloat				 deg_rot_y_inc = 2.f;
-int						 override_pos	 = GLFW_FALSE;
-GLfloat				 cursor_x			 = 0.f;
-GLfloat				 cursor_y			 = 0.f;
-GLfloat				 ball_x				 = -RADIUS;
-GLfloat				 ball_y				 = -RADIUS;
-GLfloat				 ball_x_inc		 = 1.f;
-GLfloat				 ball_y_inc		 = 2.f;
+int			   windowed_xpos, windowed_ypos, windowed_width, windowed_height;
+int			   width, height;
+GLfloat		   deg_rot_y	 = 0.f;
+GLfloat		   deg_rot_y_inc = 2.f;
+int			   override_pos	 = GLFW_FALSE;
+GLfloat		   cursor_x		 = 0.f;
+GLfloat		   cursor_y		 = 0.f;
+GLfloat		   ball_x		 = -RADIUS;
+GLfloat		   ball_y		 = -RADIUS;
+GLfloat		   ball_x_inc	 = 1.f;
+GLfloat		   ball_y_inc	 = 2.f;
 DRAW_BALL_ENUM drawBallHow;
-double				 t;
-double				 t_old = 0.f;
-double				 dt;
+double		   t;
+double		   t_old = 0.f;
+double		   dt;
 
 /* Random number generator */
 #ifndef RAND_MAX
@@ -207,38 +208,38 @@ void reshape(GLFWwindow* window, int w, int h) {
 
 	glMatrixMode(GL_PROJECTION);
 	mat4x4_perspective(projection, 2.f * (float)atan2(RADIUS, 200.f),
-										 (float)w / (float)h, 1.f, VIEW_SCENE_DIST);
+					   (float)w / (float)h, 1.f, VIEW_SCENE_DIST);
 	glLoadMatrixf((const GLfloat*)projection);
 
 	glMatrixMode(GL_MODELVIEW);
 	{
-		vec3 eye		= {0.f, 0.f, VIEW_SCENE_DIST};
+		vec3 eye	= {0.f, 0.f, VIEW_SCENE_DIST};
 		vec3 center = {0.f, 0.f, 0.f};
-		vec3 up			= {0.f, -1.f, 0.f};
+		vec3 up		= {0.f, -1.f, 0.f};
 		mat4x4_look_at(view, eye, center, up);
 	}
 	glLoadMatrixf((const GLfloat*)view);
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action,
-									int mods) {
+				  int mods) {
 	if(action != GLFW_PRESS) return;
 
 	if(key == GLFW_KEY_ESCAPE && mods == 0)
 		glfwSetWindowShouldClose(window, GLFW_TRUE);
 	if((key == GLFW_KEY_ENTER && mods == GLFW_MOD_ALT) ||
-		 (key == GLFW_KEY_F11 && mods == GLFW_MOD_ALT)) {
+	   (key == GLFW_KEY_F11 && mods == GLFW_MOD_ALT)) {
 		if(glfwGetWindowMonitor(window)) {
 			glfwSetWindowMonitor(window, NULL, windowed_xpos, windowed_ypos,
-													 windowed_width, windowed_height, 0);
+								 windowed_width, windowed_height, 0);
 		} else {
 			GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 			if(monitor) {
 				const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 				glfwGetWindowPos(window, &windowed_xpos, &windowed_ypos);
 				glfwGetWindowSize(window, &windowed_width, &windowed_height);
-				glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height,
-														 mode->refreshRate);
+				glfwSetWindowMonitor(window, monitor, 0, 0, mode->width,
+									 mode->height, mode->refreshRate);
 			}
 		}
 	}
@@ -250,7 +251,7 @@ static void set_ball_pos(GLfloat x, GLfloat y) {
 }
 
 void mouse_button_callback(GLFWwindow* window, int button, int action,
-													 int mods) {
+						   int mods) {
 	if(button != GLFW_MOUSE_BUTTON_LEFT) return;
 
 	if(action == GLFW_PRESS) {
@@ -294,8 +295,8 @@ void DrawBoingBall(void) {
 		dt2 = dt_total > MAX_DELTA_T ? MAX_DELTA_T : dt_total;
 		dt_total -= dt2;
 		BounceBall(dt2);
-		deg_rot_y =
-				TruncateDeg(deg_rot_y + deg_rot_y_inc * ((float)dt2 * ANIMATION_SPEED));
+		deg_rot_y = TruncateDeg(deg_rot_y +
+								deg_rot_y_inc * ((float)dt2 * ANIMATION_SPEED));
 	}
 
 	/* Set ball position */
@@ -352,11 +353,11 @@ void BounceBall(double delta_t) {
 
 	/* Bounce on walls */
 	if(ball_x > (BOUNCE_WIDTH / 2 + WALL_R_OFFSET)) {
-		ball_x_inc		= -0.5f - 0.75f * (GLfloat)rand() / (GLfloat)RAND_MAX;
+		ball_x_inc	  = -0.5f - 0.75f * (GLfloat)rand() / (GLfloat)RAND_MAX;
 		deg_rot_y_inc = -deg_rot_y_inc;
 	}
 	if(ball_x < -(BOUNCE_HEIGHT / 2 + WALL_L_OFFSET)) {
-		ball_x_inc		= 0.5f + 0.75f * (GLfloat)rand() / (GLfloat)RAND_MAX;
+		ball_x_inc	  = 0.5f + 0.75f * (GLfloat)rand() / (GLfloat)RAND_MAX;
 		deg_rot_y_inc = -deg_rot_y_inc;
 	}
 
@@ -393,19 +394,20 @@ void BounceBall(double delta_t) {
  *          Low and high longitudes of slice, resp.
  *****************************************************************************/
 void DrawBoingBallBand(GLfloat long_lo, GLfloat long_hi) {
-	vertex_t	 vert_ne; /* "ne" means south-east, so on */
-	vertex_t	 vert_nw;
-	vertex_t	 vert_sw;
-	vertex_t	 vert_se;
-	vertex_t	 vert_norm;
-	GLfloat		 lat_deg;
+	vertex_t   vert_ne; /* "ne" means south-east, so on */
+	vertex_t   vert_nw;
+	vertex_t   vert_sw;
+	vertex_t   vert_se;
+	vertex_t   vert_norm;
+	GLfloat	   lat_deg;
 	static int colorToggle = 0;
 
 	/*
 	 * Iterate through the points of a latitude circle.
 	 * A latitude circle is a 2D set of X,Z points.
 	 */
-	for(lat_deg = 0; lat_deg <= (360 - STEP_LATITUDE); lat_deg += STEP_LATITUDE) {
+	for(lat_deg = 0; lat_deg <= (360 - STEP_LATITUDE);
+		lat_deg += STEP_LATITUDE) {
 		/*
 		 * Color this polygon with red or white.
 		 */
@@ -433,25 +435,27 @@ void DrawBoingBallBand(GLfloat long_lo, GLfloat long_hi) {
 		vert_sw.y = vert_se.y = (float)cos_deg(long_lo) * RADIUS;
 
 		/*
-		 * Assign each X,Z with sin,cos values scaled by latitude radius indexed by
-		 * longitude. Eg, long=0 and long=180 are at the poles, so zero scale is
-		 * sin(longitude), while long=90 (sin(90)=1) is at equator.
+		 * Assign each X,Z with sin,cos values scaled by latitude radius indexed
+		 * by longitude. Eg, long=0 and long=180 are at the poles, so zero scale
+		 * is sin(longitude), while long=90 (sin(90)=1) is at equator.
 		 */
 		vert_ne.x = (float)cos_deg(lat_deg) *
-								(RADIUS * (float)sin_deg(long_lo + STEP_LONGITUDE));
-		vert_se.x = (float)cos_deg(lat_deg) * (RADIUS * (float)sin_deg(long_lo));
+					(RADIUS * (float)sin_deg(long_lo + STEP_LONGITUDE));
+		vert_se.x =
+			(float)cos_deg(lat_deg) * (RADIUS * (float)sin_deg(long_lo));
 		vert_nw.x = (float)cos_deg(lat_deg + STEP_LATITUDE) *
-								(RADIUS * (float)sin_deg(long_lo + STEP_LONGITUDE));
+					(RADIUS * (float)sin_deg(long_lo + STEP_LONGITUDE));
 		vert_sw.x = (float)cos_deg(lat_deg + STEP_LATITUDE) *
-								(RADIUS * (float)sin_deg(long_lo));
+					(RADIUS * (float)sin_deg(long_lo));
 
 		vert_ne.z = (float)sin_deg(lat_deg) *
-								(RADIUS * (float)sin_deg(long_lo + STEP_LONGITUDE));
-		vert_se.z = (float)sin_deg(lat_deg) * (RADIUS * (float)sin_deg(long_lo));
+					(RADIUS * (float)sin_deg(long_lo + STEP_LONGITUDE));
+		vert_se.z =
+			(float)sin_deg(lat_deg) * (RADIUS * (float)sin_deg(long_lo));
 		vert_nw.z = (float)sin_deg(lat_deg + STEP_LATITUDE) *
-								(RADIUS * (float)sin_deg(long_lo + STEP_LONGITUDE));
+					(RADIUS * (float)sin_deg(long_lo + STEP_LONGITUDE));
 		vert_sw.z = (float)sin_deg(lat_deg + STEP_LATITUDE) *
-								(RADIUS * (float)sin_deg(long_lo));
+					(RADIUS * (float)sin_deg(long_lo));
 
 		/*
 		 * Draw the facet.
@@ -469,17 +473,18 @@ void DrawBoingBallBand(GLfloat long_lo, GLfloat long_hi) {
 		glEnd();
 
 #if BOING_DEBUG
-		printf("----------------------------------------------------------- \n");
+		printf(
+			"----------------------------------------------------------- \n");
 		printf("lat = %f  long_lo = %f  long_hi = %f \n", lat_deg, long_lo,
-					 long_hi);
+			   long_hi);
 		printf("vert_ne  x = %.8f  y = %.8f  z = %.8f \n", vert_ne.x, vert_ne.y,
-					 vert_ne.z);
+			   vert_ne.z);
 		printf("vert_nw  x = %.8f  y = %.8f  z = %.8f \n", vert_nw.x, vert_nw.y,
-					 vert_nw.z);
+			   vert_nw.z);
 		printf("vert_se  x = %.8f  y = %.8f  z = %.8f \n", vert_se.x, vert_se.y,
-					 vert_se.z);
+			   vert_se.z);
 		printf("vert_sw  x = %.8f  y = %.8f  z = %.8f \n", vert_sw.x, vert_sw.y,
-					 vert_sw.z);
+			   vert_sw.z);
 #endif
 	}
 
@@ -500,14 +505,14 @@ void DrawBoingBallBand(GLfloat long_lo, GLfloat long_hi) {
  * When the Workbench is dropped to the bottom, Boing shows 12 rows.
  *****************************************************************************/
 void DrawGrid(void) {
-	int						row, col;
-	const int			rowTotal	= 12;				/* must be divisible by 2 */
-	const int			colTotal	= rowTotal; /* must be same as rowTotal */
-	const GLfloat widthLine = 2.0;			/* should be divisible by 2 */
+	int			  row, col;
+	const int	  rowTotal	= 12;		/* must be divisible by 2 */
+	const int	  colTotal	= rowTotal; /* must be same as rowTotal */
+	const GLfloat widthLine = 2.0;		/* should be divisible by 2 */
 	const GLfloat sizeCell	= GRID_SIZE / rowTotal;
 	const GLfloat z_offset	= -40.0;
-	GLfloat				xl, xr;
-	GLfloat				yt, yb;
+	GLfloat		  xl, xr;
+	GLfloat		  yt, yb;
 
 	glPushMatrix();
 	glDisable(GL_CULL_FACE);
@@ -582,7 +587,8 @@ int main(void) {
 	/* Init GLFW */
 	if(!glfwInit()) exit(EXIT_FAILURE);
 
-	window = glfwCreateWindow(400, 400, "Boing (classic Amiga demo)", NULL, NULL);
+	window =
+		glfwCreateWindow(400, 400, "Boing (classic Amiga demo)", NULL, NULL);
 	if(!window) {
 		glfwTerminate();
 		exit(EXIT_FAILURE);
@@ -613,8 +619,8 @@ int main(void) {
 	while(!glfwWindowShouldClose(window)) {
 
 		/* Timing */
-		t			= glfwGetTime() / 1000;
-		dt		= t - t_old;
+		t	  = glfwGetTime() / 1000;
+		dt	  = t - t_old;
 		t_old = t;
 
 		/* Draw one frame */

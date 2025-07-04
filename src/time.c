@@ -13,7 +13,7 @@ uint64_t glfwGetTimerFrequency(void) {
 	return 0;
 };
 double glfwGetTime(void) { return (double)gTimer; };
-void	 glfwSetTime(double time) { gTimer = (uint64_t)time; };
+void   glfwSetTime(double time) { gTimer = (uint64_t)time; };
 
 TMTask	 gTM;
 uint64_t gTimer;

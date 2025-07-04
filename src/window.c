@@ -23,7 +23,7 @@ int aglErr;
 GLFWwindow* ___curWindow;
 
 GLFWwindow* glfwCreateWindow(int width, int height, const char* title,
-														 GLFWmonitor* monitor, GLFWwindow* share) {
+							 GLFWmonitor* monitor, GLFWwindow* share) {
 	GLFWwindow* win = gAlloactor.allocate(sizeof(GLFWwindow*), NULL);
 
 	// Setup the Window
@@ -39,7 +39,7 @@ GLFWwindow* glfwCreateWindow(int width, int height, const char* title,
 	SetRect(&win->winRect, 100, 100, width, height);
 
 	win->window = NewCWindow(nil, &win->winRect, (ConstStr255Param) "\p", true,
-													 documentProc, (WindowPtr)(-1), true, 0);
+							 documentProc, (WindowPtr)(-1), true, 0);
 
 	SetPort(win->window);
 	setwtitle(win->window, title);
@@ -52,9 +52,9 @@ GLFWwindow* glfwCreateWindow(int width, int height, const char* title,
 	AGL_ERROR(win->pixFormat = aglChoosePixelFormat(NULL, 0, aglAttributes));
 
 	if(win->pixFormat == NULL) {
-		printf(
-				"The system cannot find a pixel format and virtual screen that "
-				"satisfies the constraints of the buffer and renderer attributes.\n");
+		printf("The system cannot find a pixel format and virtual screen that "
+			   "satisfies the constraints of the buffer and renderer "
+			   "attributes.\n");
 		getchar();
 		exit(1);
 	}
@@ -73,15 +73,15 @@ GLFWwindow* glfwCreateWindow(int width, int height, const char* title,
 
 	win->userPtr = NULL;
 
-	win->windowPosCallback								= NULL;
-	win->windowSizeCallback								= NULL;
-	win->windowCloseCallback							= NULL;
-	win->windowRefreshCallback						= NULL;
-	win->windowFocusCallback							= NULL;
-	win->windowIconifyCallback						= NULL;
-	win->windowMaximizeCallback						= NULL;
+	win->windowPosCallback				  = NULL;
+	win->windowSizeCallback				  = NULL;
+	win->windowCloseCallback			  = NULL;
+	win->windowRefreshCallback			  = NULL;
+	win->windowFocusCallback			  = NULL;
+	win->windowIconifyCallback			  = NULL;
+	win->windowMaximizeCallback			  = NULL;
 	win->windowSetFramebufferSizeCallback = NULL;
-	win->windowContentScaleCallback				= NULL;
+	win->windowContentScaleCallback		  = NULL;
 
 	YieldToAnyThread();
 
@@ -105,8 +105,8 @@ void glfwSetWindowShouldClose(GLFWwindow* window, int value) {
 	window->shouldClose = value;
 };
 const char* glfwGetWindowTitle(GLFWwindow* window) { return window->title; };
-void				glfwSetWindowTitle(GLFWwindow* window, const char* title) {
-	 setwtitle(window->window, title);
+void		glfwSetWindowTitle(GLFWwindow* window, const char* title) {
+	   setwtitle(window->window, title);
 };
 void glfwSetWindowIcon(GLFWwindow* window, int count, const GLFWimage* images) {
 	printf("unimpl: glfwSetWindowIcon\n");
@@ -131,7 +131,7 @@ void glfwGetWindowSize(GLFWwindow* window, int* width, int* height) {
 	*height = bounds.bottom;
 };
 void glfwSetWindowSizeLimits(GLFWwindow* window, int minwidth, int minheight,
-														 int maxwidth, int maxheight) {
+							 int maxwidth, int maxheight) {
 	printf("unimpl: glfwSetWindowSizeLimits\n");
 };
 void glfwSetWindowAspectRatio(GLFWwindow* window, int numer, int denom) {
@@ -140,38 +140,38 @@ void glfwSetWindowAspectRatio(GLFWwindow* window, int numer, int denom) {
 void glfwSetWindowSize(GLFWwindow* window, int width, int height) {
 	Rect bounds;
 	GetWindowBounds(window->window, kWindowStructureRgn, &bounds);
-	bounds.right	= width;
+	bounds.right  = width;
 	bounds.bottom = height;
 	SetWindowBounds(window->window, kWindowStructureRgn, &bounds);
 };
 void glfwGetFramebufferSize(GLFWwindow* window, int* width, int* height) {
 	Rect updateRect = (*qd.thePort->visRgn)->rgnBBox;
-	*width					= updateRect.left - updateRect.right;
-	*height					= updateRect.top - updateRect.bottom;
+	*width			= updateRect.left - updateRect.right;
+	*height			= updateRect.top - updateRect.bottom;
 };
 void glfwGetWindowFrameSize(GLFWwindow* window, int* left, int* top, int* right,
-														int* bottom) {
+							int* bottom) {
 
 	Rect bounds;
 	GetWindowBounds(window->window, kWindowContentRgn, &bounds);
-	*left		= bounds.left;
-	*top		= bounds.top;
+	*left	= bounds.left;
+	*top	= bounds.top;
 	*right	= bounds.right;
 	*bottom = bounds.bottom;
 };
 void glfwGetWindowContentScale(GLFWwindow* window, float* xscale,
-															 float* yscale) {
+							   float* yscale) {
 	printf("unimpl: glfwGetWindowContentScale\n");
 };
 float glfwGetWindowOpacity(GLFWwindow* window) { return 1.0; };
-void	glfwSetWindowOpacity(GLFWwindow* window, float opacity) {
+void  glfwSetWindowOpacity(GLFWwindow* window, float opacity) {
 	 printf("unimpl: glfwSetWindowOpacity\n");
 };
 void glfwIconifyWindow(GLFWwindow* window) { HideWindow(window->window); };
 void glfwRestoreWindow(GLFWwindow* window) {
 	if(window->maximized) {
 		SetWindowBounds(window->window, kWindowStructureRgn,
-										&window->prevWinBounds);
+						&window->prevWinBounds);
 		window->maximized = false;
 	} else {
 		ShowWindow(window->window);
@@ -181,7 +181,7 @@ void glfwMaximizeWindow(GLFWwindow* window) {
 	Point mouseLoc;
 	GetMouse(&mouseLoc);
 	long growResult =
-			GrowWindow(window->window, mouseLoc, &(*(GetGrayRgn()))->rgnBBox);
+		GrowWindow(window->window, mouseLoc, &(*(GetGrayRgn()))->rgnBBox);
 	SizeWindow(window->window, growResult & 0xFFFF, growResult >> 16, false);
 
 	window->maximized = GLFW_TRUE;
@@ -203,62 +203,62 @@ void glfwSetWindowUserPointer(GLFWwindow* window, void* pointer) {
 	window->userPtr = pointer;
 };
 void* glfwGetWindowUserPointer(GLFWwindow* window) { return window->userPtr; };
-GLFWwindowposfun glfwSetWindowPosCallback(GLFWwindow*			 window,
-																					GLFWwindowposfun callback) {
-	GLFWwindowposfun last			= window->windowPosCallback;
+GLFWwindowposfun glfwSetWindowPosCallback(GLFWwindow*	   window,
+										  GLFWwindowposfun callback) {
+	GLFWwindowposfun last	  = window->windowPosCallback;
 	window->windowPosCallback = callback;
 	return last;
 };
-GLFWwindowsizefun glfwSetWindowSizeCallback(GLFWwindow*				window,
-																						GLFWwindowsizefun callback) {
-	GLFWwindowsizefun last		 = window->windowSizeCallback;
+GLFWwindowsizefun glfwSetWindowSizeCallback(GLFWwindow*		  window,
+											GLFWwindowsizefun callback) {
+	GLFWwindowsizefun last	   = window->windowSizeCallback;
 	window->windowSizeCallback = callback;
 	return last;
 };
-GLFWwindowclosefun glfwSetWindowCloseCallback(GLFWwindow*				 window,
-																							GLFWwindowclosefun callback) {
-	GLFWwindowclosefun last			= window->windowCloseCallback;
+GLFWwindowclosefun glfwSetWindowCloseCallback(GLFWwindow*		 window,
+											  GLFWwindowclosefun callback) {
+	GLFWwindowclosefun last		= window->windowCloseCallback;
 	window->windowCloseCallback = callback;
 	return last;
 };
 GLFWwindowrefreshfun
-glfwSetWindowRefreshCallback(GLFWwindow*					window,
-														 GLFWwindowrefreshfun callback) {
-	GLFWwindowrefreshfun last			= window->windowRefreshCallback;
+glfwSetWindowRefreshCallback(GLFWwindow*		  window,
+							 GLFWwindowrefreshfun callback) {
+	GLFWwindowrefreshfun last	  = window->windowRefreshCallback;
 	window->windowRefreshCallback = callback;
 	return last;
 };
-GLFWwindowfocusfun glfwSetWindowFocusCallback(GLFWwindow*				 window,
-																							GLFWwindowfocusfun callback) {
-	GLFWwindowfocusfun last			= window->windowFocusCallback;
+GLFWwindowfocusfun glfwSetWindowFocusCallback(GLFWwindow*		 window,
+											  GLFWwindowfocusfun callback) {
+	GLFWwindowfocusfun last		= window->windowFocusCallback;
 	window->windowFocusCallback = callback;
 	return last;
 };
 GLFWwindowiconifyfun
-glfwSetWindowIconifyCallback(GLFWwindow*					window,
-														 GLFWwindowiconifyfun callback) {
-	GLFWwindowiconifyfun last			= window->windowIconifyCallback;
+glfwSetWindowIconifyCallback(GLFWwindow*		  window,
+							 GLFWwindowiconifyfun callback) {
+	GLFWwindowiconifyfun last	  = window->windowIconifyCallback;
 	window->windowIconifyCallback = callback;
 	return last;
 };
 GLFWwindowmaximizefun
-glfwSetWindowMaximizeCallback(GLFWwindow*						window,
-															GLFWwindowmaximizefun callback) {
-	GLFWwindowmaximizefun last		 = window->windowMaximizeCallback;
+glfwSetWindowMaximizeCallback(GLFWwindow*			window,
+							  GLFWwindowmaximizefun callback) {
+	GLFWwindowmaximizefun last	   = window->windowMaximizeCallback;
 	window->windowMaximizeCallback = callback;
 	return last;
 };
 GLFWframebuffersizefun
-glfwSetFramebufferSizeCallback(GLFWwindow*						window,
-															 GLFWframebuffersizefun callback) {
+glfwSetFramebufferSizeCallback(GLFWwindow*			  window,
+							   GLFWframebuffersizefun callback) {
 	GLFWframebuffersizefun last = window->windowSetFramebufferSizeCallback;
 	window->windowSetFramebufferSizeCallback = callback;
 	return last;
 };
 GLFWwindowcontentscalefun
-glfwSetWindowContentScaleCallback(GLFWwindow*								window,
-																	GLFWwindowcontentscalefun callback) {
-	GLFWwindowcontentscalefun last		 = window->windowContentScaleCallback;
+glfwSetWindowContentScaleCallback(GLFWwindow*				window,
+								  GLFWwindowcontentscalefun callback) {
+	GLFWwindowcontentscalefun last	   = window->windowContentScaleCallback;
 	window->windowContentScaleCallback = callback;
 	return last;
 };

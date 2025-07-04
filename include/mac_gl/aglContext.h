@@ -25,10 +25,10 @@ typedef struct __AGLPrivateRec* AGLPrivate;
 ** AGLContext structure.
 */
 struct __AGLContextRec {
-	GLIContext					 rend;
+	GLIContext			 rend;
 	GLIFunctionDispatch	 disp;
 	GLIExtensionDispatch exts;
-	AGLPrivate					 priv;
+	AGLPrivate			 priv;
 };
 
 #ifdef __cplusplus

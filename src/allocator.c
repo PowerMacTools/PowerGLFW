@@ -29,17 +29,19 @@ static void defaultDeallocatorFunc(void* block, void* user) {
 }
 
 GLFWallocator gAlloactor = {
-		.allocate		= defaultAllocatorFunc,
-		.deallocate = defaultDeallocatorFunc,
-		.reallocate = defaultRellocatorFunc,
+	.allocate	= defaultAllocatorFunc,
+	.deallocate = defaultDeallocatorFunc,
+	.reallocate = defaultRellocatorFunc,
 };
 
 void glfwInitAllocator(const GLFWallocator* allocator) {
 	if(allocator) {
-		if(allocator->allocate && allocator->reallocate && allocator->deallocate) {
+		if(allocator->allocate && allocator->reallocate &&
+		   allocator->deallocate) {
 			gAlloactor = *allocator;
 		} else {
-			//   _glfwInputError(GLFW_INVALID_VALUE, "Missing function in allocator");
+			//   _glfwInputError(GLFW_INVALID_VALUE, "Missing function in
+			//   allocator");
 		}
 	} else {
 		memset(&gAlloactor, 0, sizeof(GLFWallocator));
