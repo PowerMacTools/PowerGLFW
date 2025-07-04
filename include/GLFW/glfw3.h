@@ -614,13 +614,6 @@ GLFWAPI void glfwSwapInterval(int interval);
 GLFWAPI int glfwExtensionSupported(const char *extension);
 GLFWAPI const char **glfwGetRequiredInstanceExtensions(uint32_t *count);
 
-/*
-  For identifying extra Mac OS 9 functions
-*/
-#define GLFW_EXTRA_MAC_FUNCTIONS 1
-void glfwMacWindowBegin(GLFWwindow *window);
-void glfwMacWindowEnd(GLFWwindow *window);
-
 /*************************************************************************
  * Global definition cleanup
  *************************************************************************/

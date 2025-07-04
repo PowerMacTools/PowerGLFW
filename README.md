@@ -14,19 +14,3 @@ The wording is important: It is a reimplementation, not a port. There are things
 Also of note:
 
 - `GLFW_PLATFORM_MACOS9` is used in functions for testing the platform support
-- Due to how MacOS's event loop works and its incompatibility with GLFW, currently extra functions are required on MacOS: `glfwMacWindowBegin`, and `glfwMacWindowEnd`. You can query the `GLFW_EXTRA_MAC_FUNCTIONS` definition to find out if they're present.
-
-```c
-while (!glfwWindowShouldClose(window)) {
-
-#ifdef GLFW_EXTRA_MAC_FUNCTIONS
-    glfwMacWindowBegin(window);
-#endif
-
-    // ...
-
-#ifdef GLFW_EXTRA_MAC_FUNCTIONS
-    glfwMacWindowEnd(window);
-#endif
-}
-```

@@ -287,7 +287,17 @@ glfwSetWindowContentScaleCallback(GLFWwindow *window,
 
 void glfwMakeContextCurrent(GLFWwindow *window) { ___curWindow = window; };
 GLFWwindow *glfwGetCurrentContext(void) { return ___curWindow; };
-void glfwSwapBuffers(GLFWwindow *window) { aglSwapBuffers(window->context); };
+void glfwSwapBuffers(GLFWwindow *window) {
+
+  BeginUpdate(window->window);
+
+  SystemTask();
+
+  aglSwapBuffers(window->context);
+
+  EndUpdate(window->window);
+  YieldToAnyThread();
+};
 void glfwSwapInterval(int interval) { printf("unimpl: glfwSwapInterval\n"); };
 int glfwExtensionSupported(const char *extension) {
   const char *extensions = (const char *)glGetString(GL_EXTENSIONS);
@@ -324,13 +334,7 @@ void glfwRequestWindowAttention(GLFWwindow *window) {
   // concerned, is allowed to do nothing "on platforms that don't support it"
 };
 
-void glfwMacWindowBegin(GLFWwindow *window) {
-  BeginUpdate(window->window);
-
-  SystemTask();
-  YieldToAnyThread();
-};
+void glfwMacWindowBegin(GLFWwindow *window) { YieldToAnyThread(); };
 void glfwMacWindowEnd(GLFWwindow *window) {
-  EndUpdate(window->window);
-  YieldToAnyThread();
+
 };

@@ -15,7 +15,7 @@ FILE(GLOB_RECURSE sources src/*.c)
 
 add_library(${PROJECT_NAME} ${sources})
 
-target_link_libraries(${PROJECT_NAME} WindowsLib InterfaceLib ThreadsLib)
+target_link_libraries(${PROJECT_NAME} WindowsLib InterfaceLib ThreadsLib m)
 
 if(PLATFORM MATCHES retroppc)
     foreach(prg IN ITEMS boing gears splitview wave windows)
@@ -23,7 +23,6 @@ if(PLATFORM MATCHES retroppc)
         add_application(
             ${prg} 
             examples/${prg}.c
-            CONSOLE
         )
 
         set_target_properties(${prg} PROPERTIES COMPILE_FLAGS "-ffunction-sections -mcpu=601 -O3 -Wall -Wextra -Wno-unused-parameter")
