@@ -33,7 +33,7 @@ int glfwInit(void) {
   return GLFW_TRUE;
 };
 
-void glfwTerminate(void) {};
+void glfwTerminate(void) { RmvTime((QElemPtr)&gTM); };
 void glfwInitHint(int hint, int value) {};
 void glfwInitAllocator(const GLFWallocator *allocator) {};
 void glfwGetVersion(int *major, int *minor, int *rev) {
