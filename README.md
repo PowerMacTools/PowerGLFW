@@ -2,7 +2,7 @@
 
 PowerGLFW is a (WIP) reimplementation of GLFW for Mac OS 8-9.
 
-![image](https://github.com/user-attachments/assets/f0b83d0d-d712-483b-8660-d8ba3dea8b17)
+![image](https://github.com/user-attachments/assets/09e0bca2-adc8-4d3f-ac5b-7e9109660d62)
 
 The wording is important: It is a reimplementation, not a port. There are things done that wouldn't be done in upstream GLFW, there are features missing, and new bugs. Notably:
 
