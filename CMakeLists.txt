@@ -20,12 +20,12 @@ target_link_libraries(${PROJECT_NAME} WindowsLib InterfaceLib ThreadsLib m gl)
 option(BUILD_EXAMPLES "Build the GLFW examples" ON)
 
 if(${BUILD_EXAMPLES})
-foreach(prg IN ITEMS boing gears splitview wave windows)
+foreach(prg IN ITEMS boing gears wave windows)
     message(STATUS "Building ${prg}...")
     add_application(
         ${prg} 
         examples/${prg}.c
-        CONSOLE
+        # CONSOLE
     )
 
     set_target_properties(${prg} PROPERTIES COMPILE_FLAGS "-ffunction-sections -mcpu=601 -O3 -Wall -Wextra -Wno-unused-parameter")

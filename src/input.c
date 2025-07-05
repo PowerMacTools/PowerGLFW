@@ -7,9 +7,6 @@
 #include <stddef.h>
 #include <stdio.h>
 
-const int inputEventMask =
-	mDownMask & mUpMask & keyDownMask & keyUpMask & keyUpMask;
-
 void eventFunc(WindowPtr window, EventRecord event) {
 	switch(event.what) {
 	// case updateEvt:
@@ -35,7 +32,7 @@ void eventFunc(WindowPtr window, EventRecord event) {
 		}
 	}
 	}
-	FlushEvents(inputEventMask, -1);
+	FlushEvents(everyEvent, -1);
 	YieldToAnyThread();
 }
 
@@ -46,21 +43,21 @@ void glfwPollEvents(void) {
 	SystemTask();
 
 	RgnHandle rgn = NewRgn();
-	while(!WaitNextEvent(inputEventMask, &event, 0, rgn)) {
+	while(!GetNextEvent(everyEvent, &event)) {
 		YieldToAnyThread();
 	}
 
 	eventFunc(window, event);
 };
 
-void glfwWaitEvents(void) { glfwWaitEventsTimeout(0); };
+void glfwWaitEvents(void) { glfwWaitEventsTimeout(1); };
 void glfwWaitEventsTimeout(double timeout) {
 	WindowPtr	window = ___curWindow->window;
 	EventRecord event;
 
 	SystemTask();
 
-	while(!WaitNextEvent(inputEventMask, &event, timeout, window->visRgn)) {
+	while(!WaitNextEvent(everyEvent, &event, timeout, window->visRgn)) {
 		YieldToAnyThread();
 	}
 
