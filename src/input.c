@@ -9,9 +9,11 @@
 
 void eventFunc(WindowPtr window, EventRecord event) {
 	switch(event.what) {
-	// case updateEvt:
-	// aglUpdateContext(___curWindow->context);
-	// break;
+	case updateEvt:
+		if(___curWindow->windowRefreshCallback != NULL) {
+			___curWindow->windowRefreshCallback(___curWindow);
+		}
+		break;
 	case osEvt:
 		break;
 	case mouseDown: {
