@@ -41,8 +41,8 @@ struct Vertex {
 	GLfloat r, g, b;
 };
 
-#define GRIDW	  50
-#define GRIDH	  50
+#define GRIDW	  20
+#define GRIDH	  20
 #define VERTEXNUM (GRIDW * GRIDH)
 
 #define QUADW	(GRIDW - 1)
@@ -399,7 +399,7 @@ int main(int argc, char* argv[]) {
 
 	while(!glfwWindowShouldClose(window)) {
 
-		t		 = glfwGetTime();
+		t		 = glfwGetTime() / 1000;
 		dt_total = t - t_old;
 		t_old	 = t;
 
