@@ -6,6 +6,7 @@
 #include <GLFW/glfw3.h>
 #include <stddef.h>
 #include <stdio.h>
+#include <string.h>
 
 void eventFunc(WindowPtr window, EventRecord event) {
 	switch(event.what) {
@@ -20,14 +21,42 @@ void eventFunc(WindowPtr window, EventRecord event) {
 		switch(FindWindow(event.where, &window)) {
 		case inDrag:
 			DragWindow(window, event.where, &qd.screenBits.bounds);
+			if(___curWindow->windowPosCallback != NULL) {
+				___curWindow->windowPosCallback(___curWindow, event.where.h,
+												event.where.v);
+			}
 			break;
 		case inGrow: {
 			long growResult =
 				GrowWindow(window, event.where, &qd.screenBits.bounds);
-			SizeWindow(window, growResult & 0xFFFF, growResult >> 16, false);
+
+			int width  = growResult & 0xFFFF;
+			int height = growResult >> 16;
+
+			SizeWindow(window, growResult & 0xFFFF, growResult >> 16, true);
+
+			Rect rect;
+			GetWindowBounds(window, kWindowStructureRgn, &rect);
+			rect.right	= width;
+			rect.bottom = height;
+			SetWindowBounds(window, kWindowStructureRgn, &rect);
+
+			___curWindow->width	 = width;
+			___curWindow->height = height;
+
+			if(___curWindow->windowSizeCallback != NULL) {
+				___curWindow->windowSizeCallback(___curWindow, width, height);
+			}
+			if(___curWindow->windowSetFramebufferSizeCallback != NULL) {
+				___curWindow->windowSetFramebufferSizeCallback(___curWindow,
+															   width, height);
+			}
 		} break;
 		case inGoAway: {
 			if(TrackGoAway(window, event.where)) {
+				if(___curWindow->windowCloseCallback != NULL) {
+					___curWindow->windowCloseCallback(___curWindow);
+				}
 				___curWindow->shouldClose = true;
 			}
 		} break;

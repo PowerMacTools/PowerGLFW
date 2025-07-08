@@ -269,7 +269,7 @@ GLFWwindow* glfwGetCurrentContext(void) { return ___curWindow; };
 void glfwSwapBuffers(GLFWwindow* window) {
 	BeginUpdate(window->window);
 
-	InvalRect(&window->window->portRect);
+	InvalRect(&qd.screenBits.bounds);
 
 	aglSwapBuffers(window->context);
 

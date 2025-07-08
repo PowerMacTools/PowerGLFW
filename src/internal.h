@@ -16,8 +16,8 @@ struct GLFWwindow {
 	int			shouldClose;
 	const char* title;
 
-	int	 fbWidth;
-	int	 fbHeight;
+	int	 width;
+	int	 height;
 	int	 maximized;
 	Rect prevWinBounds;
 
