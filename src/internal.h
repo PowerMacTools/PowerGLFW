@@ -35,7 +35,10 @@ struct GLFWwindow {
 	GLFWframebuffersizefun	  windowSetFramebufferSizeCallback;
 	GLFWwindowcontentscalefun windowContentScaleCallback;
 
-	GLFWkeyfun keyCallback;
+	GLFWkeyfun	keyCallback;
+	GLFWcharfun charCallback;
+
+	GLFWmousebuttonfun mouseButtonCallback;
 };
 
 extern uint64_t gTimer;

@@ -83,6 +83,8 @@ GLFWwindow* glfwCreateWindow(int width, int height, const char* title,
 	win->windowSetFramebufferSizeCallback = NULL;
 	win->windowContentScaleCallback		  = NULL;
 	win->keyCallback					  = NULL;
+	win->charCallback					  = NULL;
+	win->mouseButtonCallback			  = NULL;
 
 	YieldToAnyThread();
 

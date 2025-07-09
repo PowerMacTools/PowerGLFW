@@ -18,7 +18,35 @@ void eventFunc(WindowPtr window, EventRecord event) {
 		break;
 	case osEvt:
 		break;
+	case mouseUp: {
+
+		if(___curWindow->mouseButtonCallback != NULL) {
+			int mods = MacModifiersToGLFWModifiers(event.modifiers);
+
+			if(___curWindow->keyStateMap[MK_LCTRL] == 1) {
+				___curWindow->mouseButtonCallback(
+					___curWindow, GLFW_MOUSE_BUTTON_RIGHT, GLFW_RELEASE, mods);
+			} else {
+				___curWindow->mouseButtonCallback(
+					___curWindow, GLFW_MOUSE_BUTTON_LEFT, GLFW_RELEASE, mods);
+			}
+		}
+	}
 	case mouseDown: {
+		// start with callback stuff
+		if(___curWindow->mouseButtonCallback != NULL) {
+			int mods = MacModifiersToGLFWModifiers(event.modifiers);
+
+			if(___curWindow->keyStateMap[MK_LCTRL] == 1) {
+				___curWindow->mouseButtonCallback(
+					___curWindow, GLFW_MOUSE_BUTTON_RIGHT, GLFW_PRESS, mods);
+			} else {
+				___curWindow->mouseButtonCallback(
+					___curWindow, GLFW_MOUSE_BUTTON_LEFT, GLFW_PRESS, mods);
+			}
+		}
+
+		// then do system stuff
 		switch(FindWindow(event.where, &window)) {
 		case inDrag:
 			DragWindow(window, event.where, &qd.screenBits.bounds);
@@ -67,41 +95,31 @@ void eventFunc(WindowPtr window, EventRecord event) {
 	case autoKey:
 	case keyDown:
 	case keyUp: {
+		// key char stuff
+		unsigned char ch = (event.message & charCodeMask);
+		if(*___curWindow->charCallback != NULL) {
+			___curWindow->charCallback(___curWindow, ch);
+		}
+
+		// key state map
+		unsigned char key			   = (event.message & keyCodeMask) >> 8;
+		___curWindow->keyStateMap[key] = 0;
+		if(event.what == keyDown || event.what == autoKey) {
+			___curWindow->keyStateMap[key] &= 1;
+		}
+
 		if(*___curWindow->keyCallback != NULL) {
 			int key		 = MacKeyToGLFWKey(event.message);
 			int scancode = (event.message & adbAddrMask) << 8;
 
-			int mods = 0;
+			int mods = MacModifiersToGLFWModifiers(event.modifiers);
 
-			if((event.modifiers & cmdKeyBit) == cmdKeyBit) {
-				mods |= GLFW_MOD_SUPER;
-			};
-			if((event.modifiers & shiftKeyBit) == shiftKeyBit ||
-			   (event.modifiers & rightShiftKeyBit) == rightShiftKeyBit) {
-				mods |= GLFW_MOD_SHIFT;
-			};
-			if((event.modifiers & alphaLockBit) == alphaLockBit) {
-				mods |= GLFW_MOD_CAPS_LOCK;
-			};
-			if((event.modifiers & optionKeyBit) == optionKeyBit ||
-			   (event.modifiers & rightOptionKeyBit) == rightOptionKeyBit) {
-				mods |= GLFW_MOD_ALT;
-			};
-			if((event.modifiers & controlKeyBit) == controlKeyBit ||
-			   (event.modifiers & rightControlKeyBit) == rightControlKeyBit) {
-				mods |= GLFW_MOD_CONTROL;
-			}
-
-			int			  action;
-			unsigned char ch			  = (event.message & keyCodeMask) >> 8;
-			___curWindow->keyStateMap[ch] = 0;
+			int action;
 			if(event.what == keyUp) {
 				action = GLFW_RELEASE;
 			} else {
-				___curWindow->keyStateMap[ch] &= 1;
 				action = GLFW_PRESS;
 			}
-
 			___curWindow->keyCallback(___curWindow, key, scancode, action,
 									  mods);
 		}
@@ -154,6 +172,12 @@ int			glfwGetKey(GLFWwindow* window, int key) {
 	}
 };
 
+GLFWmousebuttonfun glfwSetMouseButtonCallback(GLFWwindow*		 window,
+											  GLFWmousebuttonfun callback) {
+	GLFWmousebuttonfun last		= window->mouseButtonCallback;
+	window->mouseButtonCallback = callback;
+	return last;
+};
 int	 glfwGetMouseButton(GLFWwindow* window, int button) { return 0; };
 void glfwGetCursorPos(GLFWwindow* window, double* xpos, double* ypos) {
 	*xpos = 0;
@@ -182,11 +206,7 @@ GLFWcharmodsfun glfwSetCharModsCallback(GLFWwindow*		window,
 
 	return NULL;
 };
-GLFWmousebuttonfun glfwSetMouseButtonCallback(GLFWwindow*		 window,
-											  GLFWmousebuttonfun callback) {
 
-	return NULL;
-};
 GLFWcursorposfun glfwSetCursorPosCallback(GLFWwindow*	   window,
 										  GLFWcursorposfun callback) {
 
