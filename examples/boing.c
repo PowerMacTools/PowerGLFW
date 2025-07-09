@@ -588,7 +588,7 @@ int main(void) {
 	if(!glfwInit()) exit(EXIT_FAILURE);
 
 	window =
-		glfwCreateWindow(400, 400, "Boing (classic Amiga demo)", NULL, NULL);
+		glfwCreateWindow(800, 600, "Boing (classic Amiga demo)", NULL, NULL);
 	if(!window) {
 		glfwTerminate();
 		exit(EXIT_FAILURE);

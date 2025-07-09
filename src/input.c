@@ -126,24 +126,31 @@ void eventFunc(WindowPtr window, EventRecord event) {
 	}
 	}
 
-	// cursor position
-	Point mouseLoc;
-	Rect  winBounds;
-	GetMouse(&mouseLoc);
-	GetWindowBounds(window, kWindowStructureRgn, &winBounds);
-	mouseLoc.h -= winBounds.right;
-	mouseLoc.v -= winBounds.bottom;
-	if(mouseLoc.h != ___curWindow->lastMousePos.h ||
-	   mouseLoc.v != ___curWindow->lastMousePos.v) {
-		if(___curWindow->cursorPosCallback != NULL) {
-			___curWindow->cursorPosCallback(___curWindow, mouseLoc.h,
-											mouseLoc.v);
-			___curWindow->lastMousePos = mouseLoc;
-		}
-	}
-
 	FlushEvents(everyEvent, -1);
 	YieldToAnyThread();
+}
+
+void cursorPosUpdate(WindowPtr window, EventRecord event) {
+	// cursor position
+	Rect winBounds;
+
+#if TARGET_API_MAC_CARBON
+	GetGlobalMouse(&event.where);
+#endif
+
+	GlobalToLocal(&event.where);
+
+	GetWindowBounds(window, kWindowStructureRgn, &winBounds);
+	event.where.h -= (winBounds.right);
+	event.where.v -= (winBounds.bottom);
+	if(event.where.h != ___curWindow->lastMousePos.h ||
+	   event.where.v != ___curWindow->lastMousePos.v) {
+		if(___curWindow->cursorPosCallback != NULL) {
+			___curWindow->cursorPosCallback(___curWindow, event.where.h,
+											event.where.v);
+			___curWindow->lastMousePos = event.where;
+		}
+	}
 }
 
 void glfwPollEvents(void) {
@@ -158,6 +165,7 @@ void glfwPollEvents(void) {
 	}
 
 	eventFunc(window, event);
+	cursorPosUpdate(window, event);
 };
 
 void glfwWaitEvents(void) { glfwWaitEventsTimeout(1); };
@@ -172,6 +180,7 @@ void glfwWaitEventsTimeout(double timeout) {
 	}
 
 	eventFunc(window, event);
+	cursorPosUpdate(window, event);
 };
 void glfwPostEmptyEvent(void) { /* ... */ };
 int	 glfwGetInputMode(GLFWwindow* window, int mode) { return 0; };
