@@ -125,8 +125,14 @@ void eventFunc(WindowPtr window, EventRecord event) {
 		}
 	}
 	}
+
+	// cursor position
 	Point mouseLoc;
+	Rect  winBounds;
 	GetMouse(&mouseLoc);
+	GetWindowBounds(window, kWindowStructureRgn, &winBounds);
+	mouseLoc.h -= winBounds.right;
+	mouseLoc.v -= winBounds.bottom;
 	if(mouseLoc.h != ___curWindow->lastMousePos.h ||
 	   mouseLoc.v != ___curWindow->lastMousePos.v) {
 		if(___curWindow->cursorPosCallback != NULL) {
