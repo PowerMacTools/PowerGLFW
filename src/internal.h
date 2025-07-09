@@ -32,6 +32,8 @@ struct GLFWwindow {
 	GLFWwindowmaximizefun	  windowMaximizeCallback;
 	GLFWframebuffersizefun	  windowSetFramebufferSizeCallback;
 	GLFWwindowcontentscalefun windowContentScaleCallback;
+
+	GLFWkeyfun keyCallback;
 };
 
 extern uint64_t gTimer;

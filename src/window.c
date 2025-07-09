@@ -82,6 +82,7 @@ GLFWwindow* glfwCreateWindow(int width, int height, const char* title,
 	win->windowMaximizeCallback			  = NULL;
 	win->windowSetFramebufferSizeCallback = NULL;
 	win->windowContentScaleCallback		  = NULL;
+	win->keyCallback					  = NULL;
 
 	YieldToAnyThread();
 
@@ -169,22 +170,22 @@ void  glfwSetWindowOpacity(GLFWwindow* window, float opacity) {
 };
 void glfwIconifyWindow(GLFWwindow* window) { HideWindow(window->window); };
 void glfwRestoreWindow(GLFWwindow* window) {
-	if(window->maximized) {
-		SetWindowBounds(window->window, kWindowStructureRgn,
-						&window->prevWinBounds);
-		window->maximized = false;
-	} else {
-		ShowWindow(window->window);
-	}
+	// if(window->maximized) {
+	// 	SetWindowBounds(window->window, kWindowStructureRgn,
+	// 					&window->prevWinBounds);
+	// 	window->maximized = false;
+	// } else {
+	// 	ShowWindow(window->window);
+	// }
 };
 void glfwMaximizeWindow(GLFWwindow* window) {
-	Point mouseLoc;
-	GetMouse(&mouseLoc);
-	long growResult =
-		GrowWindow(window->window, mouseLoc, &(*(GetGrayRgn()))->rgnBBox);
-	SizeWindow(window->window, growResult & 0xFFFF, growResult >> 16, false);
+	// Point mouseLoc;
+	// GetMouse(&mouseLoc);
+	// long growResult =
+	// 	GrowWindow(window->window, mouseLoc, &(*(GetGrayRgn()))->rgnBBox);
+	// SizeWindow(window->window, growResult & 0xFFFF, growResult >> 16, false);
 
-	window->maximized = GLFW_TRUE;
+	// window->maximized = GLFW_TRUE;
 };
 void glfwShowWindow(GLFWwindow* window) { ShowWindow(window->window); };
 void glfwHideWindow(GLFWwindow* window) { HideWindow(window->window); };
