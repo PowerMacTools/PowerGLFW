@@ -22,8 +22,6 @@ struct GLFWwindow {
 	Rect  prevWinBounds;
 	Point lastMousePos;
 
-	void* userPtr;
-
 	uint8_t keyStateMap[255];
 
 	GLFWwindowposfun		  windowPosCallback;
@@ -41,6 +39,8 @@ struct GLFWwindow {
 
 	GLFWmousebuttonfun mouseButtonCallback;
 	GLFWcursorposfun   cursorPosCallback;
+
+	void* userPtr;
 };
 
 extern uint64_t gTimer;
