@@ -23,6 +23,8 @@ struct GLFWwindow {
 
 	void* userPtr;
 
+	uint8_t keyStateMap[255];
+
 	GLFWwindowposfun		  windowPosCallback;
 	GLFWwindowsizefun		  windowSizeCallback;
 	GLFWwindowclosefun		  windowCloseCallback;
