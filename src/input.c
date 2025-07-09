@@ -1,3 +1,4 @@
+#include "CarbonEvents.h"
 #include "Events.h"
 #include "MacWindows.h"
 #include "Quickdraw.h"
@@ -19,7 +20,6 @@ void eventFunc(WindowPtr window, EventRecord event) {
 	case osEvt:
 		break;
 	case mouseUp: {
-
 		if(___curWindow->mouseButtonCallback != NULL) {
 			int mods = MacModifiersToGLFWModifiers(event.modifiers);
 
@@ -110,7 +110,7 @@ void eventFunc(WindowPtr window, EventRecord event) {
 
 		if(*___curWindow->keyCallback != NULL) {
 			int key		 = MacKeyToGLFWKey(event.message);
-			int scancode = (event.message & adbAddrMask) << 8;
+			int scancode = (event.message & adbAddrMask) >> 16;
 
 			int mods = MacModifiersToGLFWModifiers(event.modifiers);
 
@@ -125,6 +125,17 @@ void eventFunc(WindowPtr window, EventRecord event) {
 		}
 	}
 	}
+	Point mouseLoc;
+	GetMouse(&mouseLoc);
+	if(mouseLoc.h != ___curWindow->lastMousePos.h ||
+	   mouseLoc.v != ___curWindow->lastMousePos.v) {
+		if(___curWindow->cursorPosCallback != NULL) {
+			___curWindow->cursorPosCallback(___curWindow, mouseLoc.h,
+											mouseLoc.v);
+			___curWindow->lastMousePos = mouseLoc;
+		}
+	}
+
 	FlushEvents(everyEvent, -1);
 	YieldToAnyThread();
 }
@@ -203,14 +214,14 @@ GLFWcharfun glfwSetCharCallback(GLFWwindow* window, GLFWcharfun callback) {
 };
 GLFWcharmodsfun glfwSetCharModsCallback(GLFWwindow*		window,
 										GLFWcharmodsfun callback) {
-
 	return NULL;
 };
 
 GLFWcursorposfun glfwSetCursorPosCallback(GLFWwindow*	   window,
 										  GLFWcursorposfun callback) {
-
-	return NULL;
+	GLFWcursorposfun last	  = window->cursorPosCallback;
+	window->cursorPosCallback = callback;
+	return last;
 };
 GLFWcursorenterfun glfwSetCursorEnterCallback(GLFWwindow*		 window,
 											  GLFWcursorenterfun callback) {

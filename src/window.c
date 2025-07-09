@@ -85,6 +85,9 @@ GLFWwindow* glfwCreateWindow(int width, int height, const char* title,
 	win->keyCallback					  = NULL;
 	win->charCallback					  = NULL;
 	win->mouseButtonCallback			  = NULL;
+	win->cursorPosCallback				  = NULL;
+
+	win->lastMousePos = (Point){.v = 0, .h = 0};
 
 	YieldToAnyThread();
 

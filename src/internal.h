@@ -16,10 +16,11 @@ struct GLFWwindow {
 	int			shouldClose;
 	const char* title;
 
-	int	 width;
-	int	 height;
-	int	 maximized;
-	Rect prevWinBounds;
+	int	  width;
+	int	  height;
+	int	  maximized;
+	Rect  prevWinBounds;
+	Point lastMousePos;
 
 	void* userPtr;
 
@@ -39,6 +40,7 @@ struct GLFWwindow {
 	GLFWcharfun charCallback;
 
 	GLFWmousebuttonfun mouseButtonCallback;
+	GLFWcursorposfun   cursorPosCallback;
 };
 
 extern uint64_t gTimer;
