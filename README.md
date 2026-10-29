@@ -1,3 +1,7 @@
+**Deprecated** - The [milsko](https://github.com/pyrite-dev/milsko/) UI library, which has more featureful and complete then this, has been ported to Classic Mac OS using what I learned from this. You should use that instead.
+
+---
+
 # PowerGLFW
 
 PowerGLFW is a (WIP) reimplementation of GLFW for Mac OS 8-9.
